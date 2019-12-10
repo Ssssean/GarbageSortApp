@@ -1,0 +1,21 @@
+<import src="../../component/module/module.wxml" />
+
+<ui-fix-nav-bar title="{{ title }}" custom-style="{{ { borderBottom: 'none', backgroundColor: '#fff' } }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view wx:if="{{isShow}}">
+    <!--当前步骤数-->
+    <template is="order-steps" data="{{ step: step }}"></template>
+    <!--订单信息-->
+    <template is="order-block-msg" data="{{ title: '订单信息', data: shop_msg }}"></template>
+    <!--基本信息-->
+    <template is="order-block-msg" data="{{ title: '基本信息', data: shop_form }}"></template>
+    <!--订单进度-->
+    <template is="order-block-progress" data="{{ title: '订单进度', data: shop_progress }}"></template>
+</view>
+<view wx:else class="title-box">
+    <image class="box-none" lazy-load="true" src="/images/none/empty_order.png" />
+    <text>内容详情正在展现</text>
+</view>
+<!--热门商品-->
+<template is="shop-hot-list" data="{{ shops: hotShops, class_imgtype, domain, class_type }}"></template>

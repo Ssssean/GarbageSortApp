@@ -1,0 +1,37 @@
+<import src="../../../component/components.wxml" />
+<import src="../../../component/menu/menu.wxml" />
+
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<template is="goodsDescription" data="{{params:goodsDetail}}"></template>
+
+
+<view class="blank"></view>
+
+<template is="goodsIntroduction" data="{{params:shopDetail}}"></template>
+
+<ui-popup show="{{ show }}" position="bottom" height="180px">
+  <view class="exchangeDetail">
+    <image class="exchangeGoodsImage" src="{{goodsDetail.shop_url}}"></image>
+    <view class="exchangeGoods">
+      <view class="goodsPrice">
+        <image src="/images/tree.png" mode="scaleToFill" style="height:30rpx;width:30rpx"/>{{goodsDetail.shop_price}}
+      </view>
+      <view class="goodsType" >
+        <i-icon type="commodity" />
+        {{goodsDetail.shop_title}}
+      </view>
+    </view>
+  </view>
+  <view class="count">
+    <view class="countText">数量</view>
+    <view class="countdeal">
+        <i-input-number value="{{ value }}" min="1" max="100" bindchange="handleChange" />
+    </view>
+  </view>
+  <view class="confirm" bindtap="toExchangeDetail">
+    确认兑换
+  </view>
+</ui-popup>
+

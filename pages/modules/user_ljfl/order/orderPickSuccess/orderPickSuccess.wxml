@@ -1,0 +1,80 @@
+<!--pages/modules/user_ljfl/order/orderPickSuccess/orderPickSuccess.wxml-->
+
+<ui-fix-nav-bar slot="nav-bar" title="预约失败" custom-style="{{ { backgroundColor: '#00a161'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view class="address-add-box">
+    <form bindsubmit="bindSave">
+        <view class="ui-card-box">
+          <view class="ui-card">
+            <view class="ui-cart-title ui-collapse-item-title">
+
+                <view class="ui-row ui-row" style="height:50px;">
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-left: 20px;flex:0 0 35%;">
+                      <view class="ui-col-content align-left valign-middle">
+                        <view>货物重量(kg)</view>
+                      </view>
+                    </view>
+
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="">
+                        <view class="ui-col-content align-left valign-middle">
+                          <input name="weight" type="number" placeholder="请输入，必填" value="" class="placeholder"></input>
+                        </view>
+                    </view>
+                </view>
+
+                <view class="xian"></view>
+
+                <view class="ui-row ui-row" style="height:50px;">
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-left: 20px;flex:0 0 35%;">
+                      <view class="ui-col-content align-left valign-middle">
+                        <view>市场单价(kg)</view>
+                      </view>
+                    </view>
+
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="">
+                        <view class="ui-col-content align-left valign-middle">
+                          <input name="price" type="number" placeholder="请输入，必填" value=""  class="placeholder"></input>
+                        </view>
+                    </view>
+                </view>
+              
+            </view>
+          </view>
+        </view>
+
+        <view class="ui-card-box">
+          <view class="ui-card">
+            <view class="ui-cart-title ui-collapse-item-title">
+
+                <view class="ui-row" style="height:50px;">
+                    <view class="ui-col-content align-left valign-middle" style="padding-left: 40rpx;">
+                        <view>备注信息</view>
+                    </view>
+                </view>
+
+                <view class="ui-row">
+                    <textarea   bindinput="feedbackText" placeholder="请输入备注信息..." placeholder-style="color:#999" value="">
+                    </textarea>
+                </view>
+
+                <view class="address-jia-image" >
+                    <block wx:if="{{ imagepath }}">
+                        <image src="{{ imagepath }}" bindtap="uploadimage"/>
+                    </block>
+                    <block wx:else>
+                        <image src="../../../../../images/address/jia.png" bindtap="uploadimage"/>
+                    </block>
+                </view>
+
+                
+              
+            </view>
+          </view>
+        </view>
+
+      <ui-fixed-view bottom="0" left="0" right="0">
+          <button class="fixed-view-content" form-type="submit" style="border-radius:0px;">提交</button>
+      </ui-fixed-view>
+    </form>
+</view>

@@ -1,0 +1,25 @@
+<import src="../../component/module/module.wxml" />
+<ui-fix-nav-bar title="购物车">
+	<view slot="left-text" catchtap="enterEdit">{{ editMode ? '完成' : '编辑' }}</view>
+</ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+<view class="search-line"></view>
+
+
+<i-message id="message" custom-style="top:{{NAV_HEIGHT}}px"/>
+
+<i-modal title="删除确认" visible="{{ showDelModal }}" actions="{{ modalActions }}" bind:click="delCart">
+    <view>删除后无法恢复哦</view>
+</i-modal>
+
+<i-modal title="设置小项" visible="{{ showSetItemModal }}" actions="{{ setItemModalActions }}" bind:click="canSaveSmallItem">
+    <view style="margin: 5px;">
+        <i-input-number bindchange="changeSmallItemNumber" value="{{ smallItemNumber }}"  min="10" max="1000"/>
+    </view>
+</i-modal>
+
+<template wx:if="{{ !authShow }}" is="auth-show" data="{{ run: 'toAuthPage' }}"></template>
+<template wx:if="{{ noCartList && authShow }}" is="no-goods" data="{{ run: 'getCarts' }}"></template>
+
+<template wx:if="{{ !noCartList }}" is="cart-goods-list" data="{{ list: cartGoodsList, domain, readOnly: false }}"></template>
+<template wx:if="{{ !noCartList }}" is="cart-goods-prices" data="{{ editMode, allSelect, total_yuan_price, total_price, total_num}}"></template>

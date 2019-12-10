@@ -1,0 +1,20 @@
+<!--pages/modules/user_ljfl/order/common/common.wxml-->
+
+<ui-fix-nav-bar slot="nav-bar" title="{{ title }}" custom-style="{{ { backgroundColor: '#00a161'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+ <view class="ui-card-box" >
+    <view class="ui-card" style="border-radius:25rpx;">
+            <view class="ui-card-content">
+            <view class="ui-row">
+                <textarea   bindinput="Failmess" placeholder="请输入失败的原因..." placeholder-style="color:#999" >
+                </textarea>
+            </view>
+            <view class="ui-row">
+                <button class="ui-button" class="failbutton" bindtap="WaitFailSubmit" >提交</button>
+            </view>
+                
+                
+            </view>
+    </view>
+</view>

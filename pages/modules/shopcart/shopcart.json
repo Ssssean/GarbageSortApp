@@ -1,0 +1,16 @@
+{
+    "usingComponents": {
+        "i-swipeout": "/packages/iview-weapp/swipeout/index",
+        "i-checkbox": "/packages/iview-weapp/checkbox/index",
+        "i-cell": "/packages/iview-weapp/cell/index",
+        "i-icon": "/packages/iview-weapp/icon/index",
+        "i-modal": "/packages/iview-weapp/modal/index",
+        "i-message": "/packages/iview-weapp/message/index",
+        "i-input-number": "/packages/iview-weapp/input-number/index",
+        "ui-divider": "/packages/touchui-wx-components/ui-divider/dist/index",
+        "ui-fixed-view": "/packages/touchui-wx-components/ui-fixed-view/dist/index",
+        "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index"
+    },
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black"
+}

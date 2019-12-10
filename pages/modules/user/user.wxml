@@ -1,0 +1,57 @@
+<ui-fix-nav-bar slot="nav-bar" title="我的" custom-style="{{ {backgroundColor: 'transparent'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<i-card i-class="user-portrait" none-header="true" none-footer="true">
+    <view slot="content">
+        <open-data class="user-avatar" type="userAvatarUrl"></open-data>
+        <view class="user-box">
+            <view wx:if="{{ userName }}" class="user-nickname">{{ userName }}</view>
+            <open-data wx:else class="user-nickname" type="userNickName"></open-data>
+            <i-button i-class="user-settings" shape="circle" type="blue" size="mini" bindtap="setting">
+                设置 <text class="ui-icon icon-setting"></text>
+            </i-button>
+        </view>
+    </view>
+</i-card>
+
+<i-card i-class="user-quick-list" none-header="true" none-footer="true">
+    <view slot="content">
+        <i-cell-group>
+            <i-cell title="购物车" is-link url="/pages/modules/shopcart/shopcart">
+                <view slot="icon" class="image">
+                    <image src="/images/cart.png"></image>
+                </view>
+            </i-cell>
+            <!--<i-cell title="优惠卷" is-link>
+                <view slot="icon" class="image">
+                    <image src="/images/coupon.png"></image>
+                </view>
+            </i-cell>-->
+        </i-cell-group>
+    </view>
+</i-card>
+
+<i-card i-class="user-quick-list" none-header="true" none-footer="true">
+    <view slot="content">
+        <i-cell-group>
+            <i-cell is-link>
+                <view slot="icon" class="image">
+                    <image src="/images/help.png"></image>
+                </view>
+                <button open-type="contact" session-from="weapp" class="ui-contact-button">帮助与客服</button>
+            </i-cell>
+            <i-cell title="意见反馈" is-link url="/pages/modules/common/myTree/myTree">
+                <view slot="icon" class="image">
+                    <image src="/images/feedback.png"></image>
+                </view>
+            </i-cell>
+            <i-cell title="隐私政策" is-link>
+                <view slot="icon" class="image">
+                    <image src="/images/policy.png"></image>
+                </view>
+            </i-cell>
+        </i-cell-group>
+    </view>
+</i-card>
+
+<i-button shape="circle-small" type="ios" bindtap="authLogin">切换账号</i-button>

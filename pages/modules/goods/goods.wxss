@@ -1,0 +1,231 @@
+.hidden {
+    display: none;
+}
+
+.scrollTop {
+    display: block;
+}
+
+
+/*购物车后退按钮*/
+
+.goods-back {
+    font-size: 16px !important;
+    color: #fff !important;
+    background-color: rgba(0, 0, 0, .3);
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 50%;
+}
+
+.pop-img-box {
+    border-radius: 13rpx;
+}
+
+.pop-img-box .goods-thumbnail {
+    /*width: 160rpx;
+    height: 160rpx;*/
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+}
+
+.pop-goods-des {
+    text-align: left;
+    color: #27323f;
+    font-size: 28rpx;
+    padding-right: 14rpx;
+    width: 100%;
+}
+
+.pop-goods-des .pop-goods-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    color: #27323f;
+}
+
+.pop-goods-des .pop-goods-price {
+    color: #EF3935;
+    font-size: 30rpx;
+    padding-top: 12rpx;
+    display: flex;
+    align-items: center;
+}
+
+.pop-goods-des .pop-goods-price text {
+    color: #7b8196;
+    font-size: 24rpx;
+    padding-left: 5px;
+}
+
+.pop-goods-des .pop-goods-guige {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-size: 26rpx;
+    color: #7b8196;
+    padding-top: 12rpx;
+}
+
+.good-property-name-popup {
+    font-size: 28rpx;
+    height: 70rpx;
+    display: flex;
+    align-items: center;
+}
+
+.pop-goods-price .oprice {
+    margin-left: 3px;
+    color: #999999;
+    font-size: 10px;
+    text-decoration: line-through;
+}
+
+.goodsDetail-propertychild-box {
+    min-height: 340rpx;
+    overflow: scroll;
+    /* margin-bottom: 80rpx; */
+    /* margin-bottom: 150rpx; */
+}
+
+.content_list {
+    /* background-color: #f7f7f7; */
+}
+
+.column-goods-title {
+    font-size: 32rpx;
+    color: #383838;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-weight: 300;
+}
+
+.column-goods-title.small {
+    font-size: 30rpx;
+}
+
+.column-goods-title.over {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.column-goods-risti {
+    margin-top: 3px;
+    font-size: 24rpx;
+    color: #7b8196;
+    height: 60rpx;
+    display: flex;
+    align-items: center;
+}
+
+.column-price-content {
+    /* margin-top: 8px; */
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.column-goods-score {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    color: #7b8196;
+    font-size: 24rpx;
+    margin-right: 20rpx;
+}
+
+.column-vip-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 4rpx;
+    position: relative;
+    background-color: rgba(240, 236, 225, 0.88);
+}
+
+.label-stepper-box {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20rpx;
+    align-items: center;
+}
+
+.iphonexPropertychild {
+    margin-bottom: 210rpx;
+}
+
+.label-stepper-box .num-box {
+    display: flex;
+}
+
+.sp_ts {
+    font-size: 10px;
+}
+
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    z-index: 1001;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.goods-popup {
+    background-color: #fff;
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+    overflow: hidden;
+    bottom:100;
+}
+
+.ui-divider {
+    width: 90%;
+    margin: 0 auto;
+    font-size: 26rpx;
+}
+
+.editor-container {
+    height: 80%;
+    /* padding: 0 20px; */
+    padding: 0;
+    color: #000;
+    font-size: 12px !important;
+}
+
+.image-contianer image,
+.ql-container .editor-img,
+.editor-img {
+    max-width: 100%;
+    display: inline-block;
+    background-color: #E8E8E8;
+}
+
+.image-contianer {
+    /* height: 150px; */
+    width: 100%;
+    padding: 10px 20px;
+    /* background-color: #E8E8E8; */
+}
+
+.basicInfo {
+    margin: 10px;
+    margin-top: 15px;
+}
+
+.basicInfo .ui-col {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.basic-info-title .ui-row-border-top {
+    margin-top: 5px;
+}

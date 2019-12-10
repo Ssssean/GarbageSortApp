@@ -1,0 +1,24 @@
+
+
+<!-- 自定义导航 -->
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}">
+</ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view class="ui-card">
+	<view class="ui-card-content">
+		<view class="ui-row row-image">
+			<block wx:if="{{ imagepath }}">
+				<image src="{{ imagepath }}" class="duihuan-img" bindtap="uploadimage"/>
+			</block>
+			<block wx:else>
+				<image src="../../../../../images/address/jia.png" bindtap="uploadimage" class="duihuan-img"/>	
+			</block>
+		</view>
+		
+		<view class="ui-row">
+			<button class="ui-button" style="background:#34be79" bindtap="submitDuihuan" >提交</button>
+		</view>
+	</view>
+	
+</view>

@@ -1,0 +1,12 @@
+page {
+    background-color: #fefefe;
+}
+
+.icon-arrow-left {
+    color: #27323f;
+    font-size: 14px;
+    background-color: #fff;
+    width: 56rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+}

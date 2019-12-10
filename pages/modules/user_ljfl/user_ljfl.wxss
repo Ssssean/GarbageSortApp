@@ -1,0 +1,140 @@
+/* pages/modules/user_ljfl/user_ljfl.wxss */
+
+page {
+    background-color: #f0f0f0;
+}
+
+.user-portrait,
+.user-quick-list {
+    padding: 15rpx 15rpx;
+    border: none !important;
+    background: #34be79;
+}
+
+.user-portrait {
+    min-height: 0px;
+}
+
+.user-quick-list {
+    padding: 0;
+}
+
+.user-quick-list .image {
+    width: 40rpx;
+    height: 40rpx;
+    margin-right: 12rpx;
+}
+
+.user-avatar {
+    border-radius: 50%;
+    float: left;
+    display: block;
+    overflow: hidden;
+    width: 100rpx;
+    height: 100rpx;
+    box-shadow: 0 0.16rem 0.32rem 0 rgba(0, 0, 0, 0.05);
+}
+
+.user-nickname {
+    color: #fff;
+    display: block;
+    font-size: 34rpx;
+    margin-bottom: 12rpx;
+    font-weight: 300;
+    letter-spacing: 3rpx;
+    min-height: 16.304rpx;
+    padding-top: 15rpx;
+}
+
+.icon-arrow-right,
+.icon-setting {
+    font-size: 14px;
+    color: #00a161 !important;
+}
+
+.user-settings {
+    text-align: left;
+}
+
+.user-box {
+    float: left;
+    width: 70%;
+    margin-left: 30rpx;
+}
+
+.ui-contact-button {
+    padding: 0;
+    color: #495060;
+    text-align: left;
+    background: transparent;
+}
+
+
+/*去掉小程序按钮边框*/
+
+.ui-contact-button::after {
+    border: none;
+}
+
+.ui-card {
+    height: 90rpx;
+    line-height: 90rpx;
+}
+
+.ui-col-image {
+    padding-left: 30rpx;
+}
+
+.ui-col-my {
+    padding-left: 10rpx;
+}
+
+.i-cell,
+.i-cell-left-0 {
+    display: flex;
+    background: #fff;
+    align-items: center;
+    line-height: 1.4;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.ui-col-orderStatus {
+    justify-content: center;
+}
+
+.xian {
+    background-color: #f0f0f0;
+    width: 600rpx;
+    height: 1rpx;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.myorder-image {
+    padding-right: 10rpx;
+}
+
+.ui-card-box {
+    margin-top: 10px;
+}
+
+.order-status-text {
+    color: #6e6e6e;
+}
+
+.col-myorder {
+    padding-left: 50rpx;
+}
+
+.col-lookallorder {
+    justify-content: flex-end;
+    padding-right: 50rpx;
+}
+
+.card-username {
+    background: #34be79;
+    border-radius: 0px;
+    margin: 0px;
+    height: 15%;
+}

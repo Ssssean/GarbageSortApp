@@ -1,0 +1,7 @@
+{
+    "usingComponents": {
+        "i-icon": "../../../../packages/iview-weapp/icon/index",
+        "i-spin": "../../../../packages/iview-weapp/spin/index",
+        "ui-nav-bar": "../../../../packages/touchui-wx-components/ui-nav-bar/dist/index"
+    }
+}

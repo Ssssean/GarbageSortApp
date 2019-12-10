@@ -1,0 +1,31 @@
+/**
+ * @homeModules: 	首页模块
+ * @hotRec|discount: 模块id
+ * @ver: 			模块版本
+ * @title:			模块标题
+ * @subtitle:		模块小标题
+ * @type: 			模块类型 shopPics: 商品大图
+ * @isMore:			是否显示更多
+ * @moreLink: 		更多按钮链接
+ */
+{
+	"homeModules": {
+		"hotRec": {
+				"ver": "1.0",
+				"title" : "热门推荐",
+				"subtitle":"您身边的知识产权专家",
+				"type": "shopPics",
+				"isMore": true,
+				"moreLink": "",
+				"items": [
+					{
+						"imgSrc": ""
+					}
+				]
+			}
+		},
+		"discount": {
+			"ver": "1.0",
+		}
+	}
+}

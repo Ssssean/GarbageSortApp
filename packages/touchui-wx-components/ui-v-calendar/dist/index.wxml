@@ -1,0 +1,30 @@
+<view class="ui-v-calendar">
+  <view class="calendar-title">
+    <view wx:for="{{['日', '一', '二', '三', '四', '五', '六']}}" wx:for-index="key" wx:key="key" wx:for-item="item"  class="calendar-weekday">
+      {{item}}
+    </view>
+  </view>
+  <view class="calendar-fixed"></view>
+  <!-- <scroll-view scroll-top="{{scrollTop}}" scroll-y style="{{calendarWrapStyle}}" class="calendar-wrap"> -->
+
+  <view class="calendar-body">
+    <view class="calendar-month-body" wx:for="{{monthsArray}}" wx:for-index="monthIndex" wx:key="monthIndex" wx:for-item="monthItem" style="height:{{monthItem.monthHeight}}px">
+      <view class="calendar-month-title" style="{{monthTitleStyle}}">{{monthItem.year}}年{{monthItem.month}}月</view>
+
+      <view class="calendar-day-wrap" bindtap="touchStartHandler" wx:for="{{monthItem.data}}" wx:for-index="dayIndex" wx:key="dayIndex" data-month-index="{{monthIndex}}" data-day-index="{{dayIndex}}" data-item="{{dayItem}}" wx:for-item="dayItem">
+        <view class="calendar-day-cell {{disablePastDays && dayItem.isPastDay ? 'is-past-days' : ''}} {{dayItem.isHoliday && dayItem.isThisMonth ? 'is-holiday' : ''}} {{dayItem.isThisMonth ? 'is-this-month' : 'not-this-month'}}  {{myItem.value === dayItem.value ? 'is-selected' : ''}} {{dayItem.value === rangeLeftItem.value ? 'is-selected-left' : ''}} {{dayItem.value === rangeRightItem.value  ? 'is-selected-right' : ''}} {{range.isInRange(inRangeArray, dayItem) ? 'is-selected-in-range' : ''}}" style="background-color: {{range.isInRange(inRangeArray, dayItem) ? rangeColor : (dayItem.value === rangeLeftItem.value  ? startRangeColor : (dayItem.value === rangeRightItem.value ? endRangeColor : (myItem === dayItem  ? themeColor: '')))}}">
+          {{dayItem.isThisMonth ? dayItem.day : ''}}
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- </scroll-view> -->
+</view>
+<wxs module="range">
+  module.exports = {
+  isInRange: function (array, item) {
+  var arrayText = [];
+  for (var i = 0; i < array.length; i++) { arrayText.push(array[i].value); } return arrayText.indexOf(item.value)> -1;
+    },
+    }
+</wxs>

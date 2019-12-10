@@ -1,0 +1,10 @@
+{
+    "component": true,
+    "usingComponents": {
+        "i-icon": "/packages/iview-weapp/icon/index",
+        "ui-fixed-view": "/packages/touchui-wx-components/ui-fixed-view/dist/index"
+    },
+    "navigationStyle": "default",
+    "navigationBarTitleText": "搜索分类",
+    "navigationBarBackgroundColor": "#34be79"
+}

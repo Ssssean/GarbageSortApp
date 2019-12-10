@@ -1,0 +1,163 @@
+<import src="../../../component/components.wxml" />
+<import src="../../../component/menu/menu.wxml" />
+
+
+<!-- 自定义导航 -->
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}">
+</ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<!-- 登录状态为用户时 -->
+<view wx:if="{{true}}">
+
+  <!-- <view wx:if="{{ !authShow }}">
+      <template is="auth-show" data="{{ run: 'toAuthPage' }}"/>
+  </view> -->
+
+  <view wx:if="{{ orderList }}">
+    <view class="sticky" style="top:{{NAV_HEIGHT}}px">
+      <view bindtap="changeContent" id="get" class="stickyItem {{ get ? 'checked' : '' }} ">已获取</view>
+      <view bindtap="changeContent" id="used" class="stickyItem {{ used ? 'checked' : '' }} ">已使用</view>
+    </view>
+    <view style="height:50px"></view>
+    <view  style="height:15rpx;width:100%;background-color: #eee;top:{{NAV_HEIGHT+NAV_HEIGHT}}px"></view>
+    <view class="content_list">
+      <view wx:if="{{ orderdata }}">
+        <view wx:for="{{orderdata}}" wx:key="">
+          <i-card none-header>
+            <view slot="content">
+              <view class="ui-row" wx:if="{{item.registered}}">
+                <view class="ui-col">
+                  <view class="left">2019-11-11 10:46:10</view>
+                  <view class="right">注册 +{{item.registered}}</view>
+                </view>
+              </view>
+              <view class="ui-row" wx:if="{{item.recover}}">
+                <view class="ui-col">
+                  <view class="left">2019-11-11 10:46:10</view>
+                  <view class="right">回收 +{{item.rlweight*item.price}}</view>
+                </view>
+              </view>
+              <view class="ui-row" wx:if="{{item.rlweight}}">
+                <view class="ui-col">
+                  <view class="left">重量(kg)</view>
+                  <view class="right">{{item.rlweight}}</view>
+                </view>
+              </view>
+              <view class="ui-row" wx:if="{{item.price}}">
+                <view class="ui-col">
+                  <view class="left">单价/kg</view>
+                  <view class="right">{{item.price}}</view>
+                </view>
+              </view>
+              <view class="ui-row" wx:if="{{item.epinfo}}">
+                <view class="ui-col extraInfo" align="center" >
+                  <view class="left">备注信息</view>
+                  <view style="text-align:left;flex:1;height:40px;width:100%;border:1px solid black;padding:auto">{{item.epinfo}}</view>
+                </view>
+              </view>
+            </view>
+            <view slot="footer" wx:if="{{item.shopurl}}">
+              <view style="height:40px;width:80px;">
+                <image src="https://zhdb.shnfan.com{{item.shopurl}}"></image>
+              </view>
+            </view>
+          </i-card>
+          <view style="height:15rpx;width:100%;background-color: #eee"></view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{ used }}">
+      <view wx:for="{{ orderList.used }}">
+        <i-card none-header>
+          <view slot="content">
+            <view class="ui-row">
+              <view class="ui-col">
+                <view class="left">2019-12-2 10:32:59</view>
+                <view class="right"> -{{item.point}}</view>
+              </view>
+            </view>
+            <view class="ui-row">
+              <view class="ui-col">
+                <view class="left">兑换商品:{{item.goods.name}}</view>
+                <view class="right">x{{item.goods.count}}</view>
+              </view>
+            </view>
+            <view class="ui-row">
+              <view class="ui-col">
+                <view class="left">兑换状态:</view>
+                <view class="state">{{item.state}}</view>
+              </view>
+            </view>
+            <view slot="footer" wx:if="{{item.pic}}">
+              <view style="height:40px;width:80px;margin-left:50px">
+                <image src="{{item.pic}}"></image>
+              </view>
+            </view>
+          </view>
+        </i-card>
+        <view style="height:15rpx;width:100%;background-color: #eee"></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="no-more-goods">
+      <image src="../../../../images/none/empty_order.png" class="no-order-img"/>
+      <view class="text">没有相关订单</view>
+  </view>
+</view>
+
+<!-- 登录状态为员工 -->
+<view wx:else>
+  <view class="sticky" style="top:{{NAV_HEIGHT}}px">
+    <view bindtap="changeContent" id="all" class="stickyItem {{ all ? 'checked' : '' }} ">全部订单</view>
+    <view bindtap="changeContent" id="wait" class="stickyItem {{ wait ? 'checked' : '' }} ">等待兑换</view>
+    <view bindtap="changeContent" id="complete" class="stickyItem {{ complete ? 'checked' : '' }} ">完成兑换</view>
+  </view>
+
+  <view style="height:50px"></view>
+
+  <view wx:if="{{ orderData.all }}">
+    <view class="ui-card-box" wx:for="{{ orderData.all }}" wx:key="id" wx:for-item="item" wx:for-index="orderIndex">
+        <view class="ui-card" style="border-radius:25rpx;">
+            <view class="ui-card-content">
+              <!--订单号和订单日期-->
+              <view class="ui-row">
+                <view class="ui-col ui-col-dingdan">
+                    <text class="order-dingdanhao">{{item.time}}</text>
+                </view>
+                <view class="ui-col exchangeStatus">
+                  <i-icon type="time" size="25" color="#34be79"/>
+                  <text style="color:pink">{{ item.status ? '兑换完成' : '等待兑换' }}</text>
+                </view>
+              </view>
+
+              <template is="orderDetail" data="{{ item:item }}"></template>
+
+              <view wx:if="{{ item.status }}" class="ui-row"> 
+
+                <image src="/images/address/xinfeng.png" style="width:60px;height:30px"/>
+
+              </view>
+
+              <view wx:else>
+
+                <view class="xian ui-row"></view>
+
+                <view class="ui-row">
+                  <button class="ui-button" style="background:#34be79" bindtap="dealOrder" data-id="{{ item.id }}" >兑换完成</button>
+                </view>
+                
+              </view>
+              
+
+            </view>
+        </view>
+    </view>
+  </view>
+
+    <view wx:else class="no-more-goods">
+        <image src="../../../../images/none/empty_order.png" class="no-order-img"/>
+        <view class="text">没有相关订单</view>
+    </view>
+</view>

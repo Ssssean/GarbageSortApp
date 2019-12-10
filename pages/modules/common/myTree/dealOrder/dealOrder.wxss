@@ -1,0 +1,30 @@
+page{
+	background-color: #eee
+}
+
+
+.dealOrder{
+	height: 150px;
+	width: 80%;
+	margin: 20px auto;
+	border-radius: 25px;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.q-image-wrap{
+	height: 80px;
+	width: 90px;
+}
+
+.question-images{
+	margin:20px auto;
+}
+
+.submitButton{
+	background-color: #34be79;
+	bottom:10px;
+	color: #fff;
+}

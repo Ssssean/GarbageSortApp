@@ -1,0 +1,260 @@
+<import src="../../../component/components.wxml" />
+<import src="../../../component/menu/menu.wxml" />
+<import src="../../../component/module/module.wxml"></import>
+
+<!-- 自定义导航 -->
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}">
+</ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view wx:if="{{ usertype == 'e'}}">
+    <view class="sticky-in-relative-container">
+        <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}">
+            <ui-tabs index="{{ current }}" bindchange="handleChange"  tab-style="{{ tabstyle }}" active-tab-style="{{ activetabStyle }}">
+                <ui-tab>全部</ui-tab>
+                <ui-tab>等待兑换</ui-tab>
+                <ui-tab>兑换完成</ui-tab>
+            </ui-tabs>
+
+            <view slot="sticky">
+                <ui-tabs index="{{ current }}" bindchange="handleChange"  tab-style="{{ tabstyle }}" active-tab-style="{{activetabStyle}}">
+                    <ui-tab>全部</ui-tab>
+                    <ui-tab>等待兑换</ui-tab>
+                    <ui-tab>兑换完成</ui-tab>
+                </ui-tabs>
+            </view>
+        </ui-sticky>
+    </view>
+</view>
+
+<view wx:if="{{ usertype == 'u'}}">
+    <view class="sticky-in-relative-container">
+        <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}">
+            <ui-tabs index="{{ current }}" bindchange="handleChange"  tab-style="{{ tabstyle }}" active-tab-style="{{ activetabStyle }}">
+                <ui-tab>已获取</ui-tab>
+                <ui-tab>已使用</ui-tab>
+            </ui-tabs>
+
+            <view slot="sticky">
+                <ui-tabs index="{{ current }}" bindchange="handleChange"  tab-style="{{ tabstyle }}" active-tab-style="{{activetabStyle}}">
+                    <ui-tab>已获取</ui-tab>
+                    <ui-tab>已使用</ui-tab>
+                </ui-tabs>
+            </view>
+        </ui-sticky>
+    </view>
+</view>
+
+
+<view wx:if="{{ !authShow }}">
+    <template is="auth-show" data="{{ run: 'toAuthPage' }}"/>
+</view>
+
+<view wx:elif="{{ mytreeData[page].length > 0 }}">
+    <!--注册积分-->
+    <block wx:if="{{ usertype == 'u' && selectStatus == useAcquired}}">
+        <view class="ui-card">
+            <view class="ui-row">
+                <view class="ui-col-8">
+                    <text>2019-10-30 10:46:10</text>
+                </view>
+                <view class="ui-col">
+                    <text>注册</text><text class="jifen-color">+10</text>
+                </view>
+            </view>
+        </view>
+    </block>
+
+    <view wx:for="{{ mytreeData }}" wx:key="key" wx:for-item="mytreeitem">
+        <view wx:for="{{ mytreeitem }}" wx:key="orderid" wx:for-item="treeitem">
+            <!--用户 环保树-->
+            <block wx:if="{{ usertype == 'u' }}">
+                <view class="ui-card" data-id="{{ treeitem.id }}">
+                    <view class="ui-card-content">
+                        <!--已获取订单信息-->
+                        <block wx:if="{{ selectStatus == useAcquired }}">
+                            <view class="ui-row row-tree">
+                                <view class="ui-col-8">
+                                    <text>{{ treeitem.create_time }}</text>
+                                </view>
+                                <view class="ui-col">
+                                    <text>回收</text>
+                                    <text class="jifen-color">+{{ treeitem.score }}</text>
+                                </view>
+                            </view>
+
+                            <view class="ui-row row-tree">
+                                <view class="ui-col-8">
+                                    货物重量(kg)
+                                </view>
+                                <view class="ui-col">
+                                    <text style="color:#34be79">{{ treeitem.rlweight }}</text>
+                                </view>
+                            </view>
+
+                            <view class="ui-row row-tree">
+                                <view class="ui-col-8">
+                                    市场单价/(kg) 
+                                </view>
+                                <view class="ui-col">
+                                    <text style="color:#34be79">{{ treeitem.price }}</text>
+                                </view>
+                            </view>
+
+                            <view class="ui-row row-tree">
+                                <view class="ui-col">
+                                    备注信息 
+                                </view>
+                            </view>
+
+                            <view class="ui-row row-tree">
+                                <view class="ui-col">
+                                    <textarea  value="{{ treeitem.epinfo }}" disabled="true"/>
+                                </view>
+                            </view>
+
+                            <view class="ui-row row-tree">
+                                <view class="ui-col">
+                                    <image src="https://zhdb.shnfan.com{{treeitem.shop_url}}"  class="tree-image"/>
+                                </view>  
+                            </view>
+                        </block>
+
+                        <!--已使用订单信息-->
+                        <block wx:if="{{ selectStatus == userUsed }}">
+                            <view class="ui-row row-tree">
+                                <view class="ui-col-8">
+                                    <text>{{ treeitem.create_time }}</text>
+                                </view>
+                                <view class="ui-col">
+                                    <text class="jifen-color">-{{ treeitem.shop_score }}</text>
+                                </view>
+                            </view>
+                            <view class="ui-row row-tree">
+                                <view class="ui-col-8">
+                                    <text class="row-text-right">兑换商品:</text>
+                                    <text>{{ treeitem.shoptitle }}</text>
+                                </view>
+                                <view class="ui-col">
+                                    <text class="jifen-color">X{{ treeitem.shopnum }}</text>
+                                </view>
+                            </view>
+                            <view class="ui-row row-tree">
+                                <view class="ui-col">
+                                    <text class="row-text-right">兑换状态:</text>
+                                    <text style="color:pink">{{ treeitem.status_name }}</text>
+                                </view>
+                            </view>
+
+                            <block wx:if="{{ treeitem.status == DuihuanSuccess }}">
+                                <view class="ui-row row-tree">
+                                    <view class="ui-col">
+                                        <image src="https://zhdb.shnfan.com{{treeitem.shop_url}}"  class="tree-image"/>
+                                    </view>  
+                                </view>
+                            </block>
+                            
+                        </block>
+
+                    </view>
+                </view>
+            </block>
+
+            <!--员工环保树订单-->
+            <block wx:if="{{ usertype == 'e' }}">
+                <view class="ui-card card-e-style" data-id="{{ treeitem.id }}">
+                    <view class="ui-card-content">
+                        <view class="ui-row row-tree">
+                            <view class="ui-col-8">
+                                <text>{{ treeitem.create_time }}</text>
+                            </view>
+                            <view class="ui-col">
+                                <i-icon type="time" size="28" color="#34be79" style="margin-top: -3px;"/>
+                                <text style="color:pink">{{ treeitem.status_name }}</text>
+                            </view>
+                        </view>
+
+                        <view class="xian"></view>
+
+                        <view class="ui-row row-tree">
+                            <view class="ui-col-3">
+                                <text class="tree-content-left">客户姓名</text>
+                            </view>
+                            <view class="ui-col">
+                                <text>{{ treeitem.adrsname }}</text>
+                            </view>
+                        </view>
+
+                        <view class="ui-row row-tree">
+                            <view class="ui-col-3">
+                                <text class="tree-content-left">客户地址</text>
+                            </view>
+                            <view class="ui-col">
+                                <text >{{ treeitem.district }}</text>
+                            </view>
+                        </view>
+
+                        <view class="ui-row row-tree">
+                            <view class="ui-col-3">
+                                <text class="tree-content-left">客户电话</text>
+                            </view>
+                            <view class="ui-col">
+                                <text>{{ treeitem.mobile_phone }}</text>
+                            </view>
+                        </view>
+
+                        <view class="ui-row row-tree">
+                            <view class="ui-col-3">
+                                <text class="tree-content-left">对换商品</text>
+                            </view>
+                            <view class="ui-col">
+                                <text >{{ treeitem.shoptitle }}</text>
+                            </view>
+                        </view>
+
+                        <view class="ui-row row-tree">
+                            <view class="ui-col-3">
+                                <text class="tree-content-left">对换数量</text>
+                            </view>
+                            <view class="ui-col">
+                                <text>{{ treeitem.shopnum }}</text>
+                            </view>
+                        </view>
+
+                        <view class="ui-row row-tree">
+                            <view class="ui-col-3">
+                                <text class="tree-content-left">备注信息</text>
+                            </view>
+                            <view class="ui-col">
+                                <text>{{ treeitem.shopnote }}</text>
+                            </view>
+                        </view>
+
+                        <block wx:if="{{ treeitem.status == DuihuanSuccess }}">
+                            <image src="https://zhdb.shnfan.com{{ treeitem.epurl }}"  class="duihuan-img"/>
+                        </block>
+                        <block wx:else>
+                            <view class="xian"></view>
+                            
+                            <view class="ui-row">
+                            <!--data-id 是环保树订单的id-->
+                                <button class="ui-button" style="background:#34be79" bindtap="GochangeShop" data-id="{{ treeitem.id }}" >兑换完成</button>
+                            </view>
+                        </block>   
+
+                    </view>
+                </view>
+            </block>
+
+          
+        </view>
+    </view>
+
+    <!--回到顶部-->
+    <template is="scroll-top" wx:if="{{ isSticky }}"></template>
+</view>
+
+<view wx:else class="no-more-goods">
+    <image src="../../../../images/none/empty_order.png" class="no-order-img"/>
+    <view class="text">没有相关订单</view>
+</view>

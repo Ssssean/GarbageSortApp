@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index",
+    "ui-popup": "/packages/touchui-wx-components/ui-popup/dist/index",
+    "i-collapse": "/packages/iview-weapp/collapse/index",
+    "i-collapse-item": "/packages/iview-weapp/collapse-item/index",
+    "i-icon": "/packages/iview-weapp/icon/index",
+    "ui-accordion": "/packages/touchui-wx-components/ui-accordion/dist/index",
+    "i-card": "/packages/iview-weapp/card/index",
+    "i-input-number": "/packages/iview-weapp/input-number/index"
+  }
+}

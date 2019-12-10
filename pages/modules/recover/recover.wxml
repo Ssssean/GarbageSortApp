@@ -1,0 +1,46 @@
+<import src="../../component/components.wxml" />
+<import src="../../component/menu/menu.wxml" />
+<import src="../../component/swiper/swiper.wxml" />
+<include src="../../component/weapp-close.wxml" />
+<import src="../../component/module/module.wxml" />
+
+
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<template is='swiper' data="{{ params:{ items:[{pic_url:'/images/home/ljfl_lunbotu_one.jpg'}] } }}"></template>
+
+<scroll-view scroll-y="true" scroll-with-animation="true" class="menu-list ui-col " style="  height:58%; ">
+
+  <template is="news-title" data="{{params:recoveryTitle}}"  class="news-title"></template>
+
+  <view class="recoveryProcess">
+    <image src="/images/liucheng.png"></image>
+  </view>
+
+  <template is="news-title" data="{{params:question}}" class="news-title"></template>
+
+  <view class="accordion">
+    <ui-accordion bindchange="slide" wx:for="{{ accordion }}" header-height="30" buttonImageStyle="{top:10px}">
+      <view slot="header">
+        <view class="ui-row title" height="50" border-bottom >
+          <view class="ui-col" vertical-align="middle" align="left" space-left="10" style="font-weight: bold;">
+            {{ item.title }}
+          </view>
+        </view>
+      </view>
+      <view slot="content" >
+        <view class="ui-row" height="40" wx:for="{{ item.content }}" wx:for-item="item2" class='content' style="padding: 20rpx;height: 100%;text-indent: 30px;">
+          <view class="ui-col" vertical-align="middle" align="left" space-left="10">{{ item2.title }}</view>
+          
+        </view>
+      </view>
+    </ui-accordion>
+  </view>
+
+</scroll-view>
+
+<view class="order" bindtap="Goreserve">
+  <i-icon type="mobilephone"  size="30" color="#fff"/>
+  <text>立即预约</text>
+</view>

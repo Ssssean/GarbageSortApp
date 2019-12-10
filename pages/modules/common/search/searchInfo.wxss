@@ -1,0 +1,31 @@
+page {
+	background-color: #f5f5f5;
+}
+
+.order-list {
+    padding-top: 5px;
+	border-top: 1px solid #f1f1f1;
+}
+
+.order-list  + .order-list  {
+	 padding-top: 0;
+	 border-top: none;
+}
+
+.goods-box {
+    padding-top: 5px;
+	padding-bottom: 0;
+}
+
+.goods-box .goods-list .goods-content {
+    margin: 0;
+    border-radius: 0;
+}
+
+.goods-list:nth-child(odd) {
+    border-right: 1px solid #f1f1f1;
+}
+
+.goods-list:not(:last-child) {
+    border-bottom: 1px solid #f1f1f1;
+}

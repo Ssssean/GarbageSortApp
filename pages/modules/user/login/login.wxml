@@ -1,0 +1,21 @@
+<ui-fix-nav-bar title="{{navTitle}}" hide-back-btn="true">
+    <view slot="left-btn" bindtap="tapCancel" data-back-method="{{ backMethod }}" data-back-url="{{ backUrl }}">
+        <text type="icon-close" class="ui-icon icon-close" style="color: #27323f;font-size: 14px;" />
+    </view>
+</ui-fix-nav-bar>
+
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<i-message id="imessage" custom-style="top:{{NAV_HEIGHT}}" />
+
+<view class="login">
+    <image class="logo" src="{{logoSrc}}" mode="aspectFit" />
+    <view class="text">{{promptMsg}}</view>
+    <view hover-class="press">
+        <button open-type="getPhoneNumber" bindgetphonenumber="runAuthLogin" style="margin-bottom: 40rpx;">{{authLoginBtn}}</button>
+    </view>
+    
+    <view hover-class="press" bindtap="userNameLogin">
+        <button class="default">{{otherLoginBtn}}</button>
+    </view>
+</view>

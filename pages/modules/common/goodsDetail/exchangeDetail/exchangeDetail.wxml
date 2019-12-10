@@ -1,0 +1,87 @@
+<!--兑换信息-->
+
+<import src="../../../../component/components.wxml" />
+<import src="../../../../component/menu/menu.wxml" />
+
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view  style="height:25rpx;width:100%;background-color: #eee"></view>
+
+<view class="feedback-content">
+    <view class="feedback-picker-box" >
+        <view class="ui-row" style="height:60px;">
+            <view class="ui-col col-address-logo">
+                <i-icon type="coordinates" size="30"/>
+            </view>
+
+            <view class="ui-col-content align-left valign-middle" style="padding-left: 20rpx;flex: 15%;">
+                <view class="feedback-picker-name">
+                    <view wx:if="{{ addressData }}">
+                        <text style="padding-right:20rpx">{{ addressData.name }}</text><text>{{ addressData.mobile_phone }}</text>
+                    </view>
+                    <view wx:else>
+                        选择联系地址
+                    </view>
+                </view>
+                <view class="feedback-picker-name2">
+                    <view  wx:if="{{ addressData}}">
+                        <text>{{ addressData.district}}{{addressData.home}}</text>
+                    </view>
+                    <view wx:else>
+                        点击选择联系人地址信息
+                    </view>
+              
+                </view>
+            </view>
+            
+            <view class="ui-col col-xuan-address"  bindtap="adressTap" value="{{ addressvalue }}">
+                 <view class="picker">选择默认地址</view>
+            <span type="arrow-down" size="14" color="#27323f" class="ui-icon icon-arrow-right" style="color: #27323f;font-size: 14px;"></span>
+            </view>
+           
+            
+        </view>
+    </view>
+
+</view>
+
+<view  style="height:25rpx;width:100%;background-color: #eee"></view>
+
+<view class="goodsCount">
+  <view class="exchangeDetail">
+    <image class="exchangeGoodsImage" src="{{shopDetail.shop_url}}"></image>
+    <view class="exchangeGoods">
+      <view class="goodsPrice">
+        <image src="/images/tree.png" mode="scaleToFill" style="height:30rpx;width:30rpx"/>{{shopDetail.shop_price}}
+      </view>
+      <view class="goodsType" >
+        <i-icon type="commodity" />
+        联通话费充值10元
+      </view>
+    </view>
+  </view>
+  <view class="count">
+    <view class="countText">数量</view>
+    <view class="countdeal">
+        <i-input-number value="{{ value }}" min="1" max="100" bindchange="handleChange" />
+    </view>
+  </view>
+  <view class="total">
+    <view >共{{value}}件 小计:{{value*shopDetail.shop_price}}</view>
+  </view>
+</view>
+
+<view  style="height:25rpx;width:100%;background-color: #eee"></view>
+
+<view class="feedback-textarea-box">
+    <view class="feedback-picker-name" style="padding-left:20px">备注信息</view>
+    <textarea bindinput="feedbackText" placeholder="充值请输入手机号，提现请输入支付宝账号或微信号" placeholder-style="color:#999;" show-confirm-bar="{{confirm}}">
+    </textarea>
+</view>
+
+<ui-fixed-view bottom="0" left="0" right="0">
+  <view class="fixed_bottom ui-row" style="height:50px; background-color: #34BE79 ;align-items: center;color:#fff;font-size: 18px; " bindtap="orderConfirm">
+    提交
+  </view>
+</ui-fixed-view>

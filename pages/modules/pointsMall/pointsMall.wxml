@@ -1,0 +1,32 @@
+<import src="../../component/components.wxml" />
+<import src="../../component/menu/menu.wxml" />
+<import src="../../component/module/module.wxml" />
+
+
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view class="title">
+  <view class="number">{{score}}</view>
+  <view class="tree">我的环保树</view>
+</view>
+
+<template is="news-title" data="{{params:title}}"></template>
+
+<view wx:if="{{shopList}}" class="goods-box">
+    <view class="goods-list" bindtap="enterShopPage" hover-class="ui-btn-hover"  wx:for="{{shopList}}" data-id="{{item.id}}">
+        <view class="goods-content">
+            <view class="icon">
+                <image src="{{item.shop_url}}" lazy-load="true" binderror="goodsPicLoadError" />
+            </view>
+            <view class="small-title">{{item.shop_title}}</view>
+            <view class="price">
+              <image src="/images/tree.png" mode="scaleToFill" style="height:30rpx;width:30rpx"/>{{item.shop_price}}
+            </view>
+        </view>
+    </view>
+</view>
+<view wx:else class="title-box">
+    <image class="box-none" lazy-load="true" src="/images/none/empty_goods.png" />
+    <text>暂无商品</text>
+</view>

@@ -1,0 +1,35 @@
+<view class="ui-nav-bar" style="{{ selfCustomStyle }}">
+  <view class="ui-row" style="height:46px;">
+
+    <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 60px;">
+      <block wx:if="{{!hideBackBtn}}">
+        <view wx:if="{{isback}}" bindtap="navigateBack" class="ui-row" style="color: #27323f;font-size: 14px;">
+          <view class="ui-col align-center valign-middle">
+			  <text type="arrow-left" size="14" color="#27323f" class="ui-icon icon-arrow-left" />
+		  </view>
+		  <view class="ui-col align-center valign-middle">
+			  <slot name="left-text"></slot>
+		  </view>
+        </view>
+        <view wx:else class="ui-col-content align-center valign-middle">
+          <navigator open-type="exit" target="miniProgram">
+            <text type="arrow-left" size="14" color="#27323f" class="ui-icon icon-arrow-left" style="font-weight: 300;color: #fff;font-size: 14px;" />
+          </navigator>
+        </view>
+      </block>
+    </view>
+
+    <view class="ui-col ui-col-align-center align-center valign-middle">
+      <view class="ui-col-content align-center valign-middle">
+        <view class="ui-header-title">{{title}}</view>
+      </view>
+    </view>
+
+    <slot name="right-btn"></slot>
+
+    <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 60px;">
+      <view class="ui-col-content align-center valign-middle"></view>
+    </view>
+
+  </view>
+</view>

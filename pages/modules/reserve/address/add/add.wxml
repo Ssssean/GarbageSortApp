@@ -1,0 +1,96 @@
+<!--pages/modules/reserve/address/add/add.wxml-->
+
+<ui-fix-nav-bar slot="nav-bar" title="{{ id == 0 ? '新增地址' : '修改地址'}}" custom-style="{{ { backgroundColor: '#34be79'} }}"></ui-fix-nav-bar>
+
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<i-message id="imessage" custom-style="top:{{NAV_HEIGHT}}" />
+
+<view class="address-add-box">
+    <form bindsubmit="bindSave">
+        <view class="ui-card-box">
+          <view class="ui-card">
+            <view class="ui-cart-title ui-collapse-item-title">
+
+                <view class="ui-row ui-row" style="height:50px;">
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-left: 20px;flex:0 0 100px;">
+                      <view class="ui-col-content align-left valign-middle">
+                        <view>收件人</view>
+                      </view>
+                    </view>
+
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="">
+                        <view class="ui-col-content align-left valign-middle">
+                          <input name="name" type="text" placeholder="请输入，必填" value="{{addressData.name}}" class="placeholder"></input>
+                        </view>
+                    </view>
+                </view>
+
+                <view class="xian"></view>
+
+                <view class="ui-row ui-row" style="height:50px;">
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-left: 20px;flex:0 0 100px;">
+                      <view class="ui-col-content align-left valign-middle">
+                        <view>手机号码</view>
+                      </view>
+                    </view>
+
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="">
+                        <view class="ui-col-content align-left valign-middle">
+                          <input name="phone" type="number" placeholder="请输入，必填" value="{{addressData.mobile_phone}}"  class="placeholder"></input>
+                        </view>
+                    </view>
+                </view>
+              
+            </view>
+          </view>
+        </view>
+
+        <view class="ui-card-box">
+          <view class="ui-card">
+            <view class="ui-cart-title ui-collapse-item-title">
+
+                <view class="ui-row ui-row" style="height:50px;">
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-left: 20px;flex:0 0 100px;">
+                      <view class="ui-col-content align-left valign-middle">
+                        <view>所在地区</view>
+                      </view>
+                    </view>
+
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="">
+                        <view class="ui-col-content align-left valign-middle">
+                          <picker mode="region" bindchange="bindRegionChange" value="{{ region }}" >
+                              <view class="picker">
+                                   {{ region }}
+                              </view>
+                          </picker>
+                        </view>
+                    </view>
+                </view>
+
+                <view class="xian"></view>
+
+                <view class="ui-row ui-row" style="height:50px;">
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-left: 20px;flex:0 0 100px;">
+                      <view class="ui-col-content align-left valign-middle">
+                        <view>详细地址</view>
+                      </view>
+                    </view>
+
+                    <view class="ui-col ui-col-align-left align-left valign-middle" style="">
+                        <view class="ui-col-content align-left valign-middle">
+                          <input name="address" type="text" placeholder="请输入，必填" value="{{ addressData.home }}" class="placeholder"></input>
+                        </view>
+                    </view>
+                </view>
+              
+            </view>
+          </view>
+        </view>
+
+      <ui-fixed-view bottom="0" left="0" right="0">
+          <button class="fixed-view-content" form-type="submit">确定</button>
+      </ui-fixed-view>
+    </form>
+</view>
+

@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "i-button": "/packages/iview-weapp/button/index",
+    "i-message": "/packages/iview-weapp/message/index",
+    "i-card": "/packages/iview-weapp/card/index",
+    "i-cell-group": "/packages/iview-weapp/cell-group/index",
+    "i-cell": "/packages/iview-weapp/cell/index",
+    "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index"
+  }
+}

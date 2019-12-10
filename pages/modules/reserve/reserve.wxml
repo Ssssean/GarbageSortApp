@@ -1,0 +1,246 @@
+<!--pages/modules/reserve/reserve.wxml-->
+<!--在线预约-->
+<import src="../../component/module/module.wxml"></import>
+
+<ui-fix-nav-bar slot="nav-bar" title="{{ orderid ? '修改订单信息' : '在线预约'}}" custom-style="{{ { backgroundColor: '#34be79'} }}"></ui-fix-nav-bar>
+
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<i-message id="imessage" custom-style="top:{{NAV_HEIGHT}}" />
+
+<view wx:if="{{ !authShow }}">
+    <template is="auth-show" data="{{ run: 'toAuthPage' }}"/>
+</view>
+<view wx:else>
+    <!--订单id不为空时显示-->
+    <view wx:if="{{ orderid != ''}}">
+        <!--订单号-->
+        <view class="feedback-content" style="margin-top:10px;">
+            <view class="feedback-picker-box" >
+                <view class="ui-row" style="height:40px;padding-left: 30rpx;">
+                    <view class="ui-col ui-col-order">
+                        <i-icon type="activity" size="25" color="#34be79"  />
+                        <text class="col-order-dingdan">{{ orderdingdanhao }}</text>
+                    </view>
+                    <view class="ui-col ui-col-order">
+                        <text class="col-order-dingdan">{{ ordercreate_time }}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <!--状态-->
+        <view class="feedback-content" style="margin-top:10px;">
+            <view class="feedback-picker-box" >
+                <view class="ui-row" style="height:40px;">
+                    <view class="ui-col ui-col-order" style="flex:0 0 120px">
+                        <text>订单状态</text>
+                    </view>
+                    <view class="ui-col col-order-error">
+                        <text>{{ orderstatusname }}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+    </view>
+   
+
+    <view class="feedback-content" style="margin-top:10px;">
+        <view class="feedback-picker-box" >
+            <view class="ui-row" style="height:60px;">
+                <view class="ui-col col-address-logo">
+                    <i-icon type="coordinates" size="30"/>
+                </view>
+
+                <view class="ui-col-content align-left valign-middle" style="padding-left: 20rpx;flex: 40%;">
+                    <view class="feedback-picker-name">
+                        <view wx:if="{{ addressData }}">
+                            <text style="padding-right:20rpx">{{ addressData.name }}</text><text>{{ addressData.mobile_phone }}</text>
+                        </view>
+                        <view wx:else>
+                            选择联系地址
+                        </view>
+                    </view>
+                    <view class="feedback-picker-name2">
+                        <view  wx:if="{{ addressData}}">
+                            <text>{{ addressData.district}}{{addressData.home}}</text>
+                        </view>
+                        <view wx:else>
+                            点击选择联系人地址信息
+                        </view>
+                
+                    </view>
+                </view>
+                
+                <view class="ui-col col-xuan-address"  bindtap="adressTap" value="{{ addressvalue }}" data-id="{{ orderid ? orderid : 0 }}" data-addressid="{{ addressid ? addressid : 0 }}">
+                    <view class="picker">选择地址</view>
+                <span type="arrow-down" size="14" color="#27323f" class="ui-icon icon-arrow-right" style="color: #27323f;font-size: 14px;"></span>
+                </view>
+            
+                
+            </view>
+        </view>
+    </view>
+
+    <view  class="feedback-content" style="margin-top:15px;">
+         <view class="feedback-content-mess">
+            <text class="feedback-content-mess-bu"> 补充信息</text>
+            <view style="color:#34be79" data-show="{{ true }}"  bindtap="handleShowMask1"> 地区覆盖说明</view>
+
+            <ui-mask show="{{showMask1}}" hide-on-tap="{{false}}" class="mask_wrap" custom-style="{{ customStyle }}">
+                <view class="photo" >
+                    <view class="ui-card-box">
+                        <view class="ui-card">
+                            <view class="ui-row">
+                                <view class="mask-title">
+                                    上门取件开通地区
+                                </view>
+                            </view>
+
+                            <view class="xian"></view>
+
+                            <view class="ui-row">
+                                <view class="mask-mess">
+                                    当前仅徐州市贾汪区开通该服务
+                                </view>
+                            </view>
+
+                        </view>
+                    </view>
+                <icon type="cancel" data-show="{{ false }}" size="48" bindtap="handleShowMask1" class="ui-icon" color="{{iconColor}}"/>
+            </view>
+        </ui-mask>
+        </view>
+    </view>
+
+    <view class="feedback-picker-box" style="margin-top:15px;">
+        <view class="ui-row" style="height:50px;">
+            <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 120px;">
+                <view class="ui-col-content align-center valign-middle">
+                    <view class="feedback-picker-name">货物种类</view>
+                </view>
+            </view>
+            <view class="ui-col ui-col-align-center align-center valign-middle" style="">
+                <view class="ui-col-content align-center valign-middle">
+                    <view class="feedback-picker">
+                       <picker bindchange="GoodPickerChange" value="{{ Goodindex }}" range="{{Goodfeedback}}">
+                            <view class="picker">
+                                {{Goodfeedback[Goodindex]}}
+                            </view>
+                        </picker>
+                        <span type="arrow-down" size="14" color="#27323f" class="ui-icon icon-arrow-down" style="color: #27323f;font-size: 14px;"></span>
+                    </view>
+                   
+                </view>
+            </view>
+        </view>
+    </view>
+
+   
+    <view class="feedback-picker-box" style="margin-top:15px;">
+        <view class="ui-row" style="height:50px;">
+            <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 120px;">
+                <view class="ui-col-content align-center valign-middle">
+                    <view class="feedback-picker-name">大约重量</view>
+                </view>
+            </view>
+            <view class="ui-col ui-col-align-center align-center valign-middle" style="">
+                <view class="ui-col-content align-center valign-middle">
+                    <view class="feedback-picker">
+                        <picker bindchange="WeightPickerChange" value="{{ Weightindex }}" range="{{Weightfeedback}}">
+                            <view class="picker">
+                                {{ Weightfeedback[Weightindex] }}
+                            </view>                           
+                            
+                        </picker>
+                        <span type="arrow-down" size="14" color="#27323f" class="ui-icon icon-arrow-down" style="color: #27323f;font-size: 14px;"></span>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="feedback-picker-box" style="margin-top:15px;">
+        <view class="ui-row" style="height:50px;">
+            <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 120px;">
+                <view class="ui-col-content align-center valign-middle">
+                    <view class="feedback-picker-name">上门日期</view>
+                </view>
+            </view>
+            <view class="ui-col ui-col-align-center align-center valign-middle" style="">
+                <view class="ui-col-content align-center valign-middle">
+                    <view class="feedback-picker">
+                        <picker mode="date" value="{{ date }}" start="{{starttime}}" end="{{endtime}}" bindchange="bindDateChange">
+                            <view class="picker">
+                                当前选择: 
+                                {{ date }}
+                            </view>
+                        </picker>
+                        <span type="arrow-down" size="14" color="#27323f" class="ui-icon icon-arrow-right" style="color: #27323f;font-size: 14px;"></span>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+
+     <view class="feedback-textarea-box" style="margin-top:15px;margin-bottom: 100px;">
+        <view class="feedback-picker-name" style="padding-left:20px">备注信息</view>
+        <textarea  wx:if="{{ isShowTextarea }}" bindinput="feedbackText" placeholder="请输入预约的描述信息..." placeholder-style="color:#999" value="{{ orderid ? feedbackText :'' }}">
+        </textarea>
+
+        <view class="address-jia-image" >
+            <view wx:if="{{ orderid == '' }}">
+                <view wx:if="{{ imagepath }}">
+                    <image src="{{ imagepath }}" bindtap="uploadimage"/>
+                </view>
+                <view wx:else>
+                    <image src="../../../images/address/jia.png" bindtap="uploadimage"/>
+                </view>
+            </view>
+            <view wx:else>
+                <view wx:if="{{ imagepath }}">
+                    <image src="{{ imagepath }}" bindtap="uploadimage"/>
+                </view>
+                <view wx:else>
+                    <image src="{{ orderimagepath }}" bindtap="uploadimage"/>
+                </view>
+            </view>
+           
+        </view>
+    </view>
+
+    <block wx:if="{{ orderid != ''}}">
+        <ui-fixed-view bottom="0" left="0" right="0">
+          <button class="fixed-view-content" data-id="{{ orderid }}" bindtap="AppointmentTap">提交修改信息</button>
+        </ui-fixed-view>
+    </block>
+    <block wx:else>
+        <ui-fixed-view bottom="0" left="0" right="0">
+            <view class="fixed_bottom ui-row" style="height:50px;">
+            <view class="ui-col valign-middle" style="flex:0 0 70%; padding-right: 10px;">
+                <view class="ui-col-content valign-middle" >
+                    <view class="i-swipeout-price ui-col-align-right"> 
+                        <text style="color: #111; font-weight: 300;">工作时间：<text style="color:#34be79">09:00-17:00</text></text> 
+                    </view>
+                    <view class="cart-all-price ui-col-align-right"> 预约后我们将在24小时内联系您</view>
+                </view>
+            </view>
+                
+            <view hover-class="ui-btn-hover" class="ui-col valign-middle" >
+                <view class="ui-col-content valign-middle">
+                    <view class="form_list_buy" style="padding-left: 10px;background-color:#34be79" bindtap="AppointmentTap">		
+                            立即预约
+                    </view>
+                </view>
+            </view>
+
+            </view>
+        </ui-fixed-view>
+    </block>
+    
+</view>
+ 
+
+

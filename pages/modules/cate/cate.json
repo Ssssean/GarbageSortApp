@@ -1,0 +1,23 @@
+{
+    "component": true,
+    "usingComponents": {
+        "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index",
+        "i-icon": "/packages/iview-weapp/icon/index",
+        "ui-popup": "/packages/touchui-wx-components/ui-popup/dist/index",
+        "ui-divider": "/packages/touchui-wx-components/ui-divider/dist/index",
+        "ui-nav-bar": "/packages/touchui-wx-components/ui-nav-bar/dist/index",
+        "i-collapse": "/packages/iview-weapp/collapse/index",
+        "i-collapse-item": "/packages/iview-weapp/collapse-item/index",
+        "i-cell-group": "/packages/iview-weapp/cell-group/index",
+        "i-cell": "/packages/iview-weapp/cell/index",
+        "i-message": "/packages/iview-weapp/message/index",
+        "ui-v-tab": "/packages/touchui-wx-components/ui-v-tab/dist/index",
+        "ui-v-tabs": "/packages/touchui-wx-components/ui-v-tabs/dist/index",
+        "ui-fixed-view": "/packages/touchui-wx-components/ui-fixed-view/dist/index",
+        "ui-sticky": "/packages/touchui-wx-components/ui-sticky/dist/index",
+        "mp-loading": "/packages/iview-weapp/loading/loading"
+    },
+    "navigationStyle": "default",
+    "navigationBarTitleText": "垃圾分类",
+    "navigationBarBackgroundColor": "#34be79"
+}

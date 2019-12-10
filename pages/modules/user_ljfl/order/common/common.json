@@ -1,0 +1,6 @@
+{
+    "component": true,
+    "usingComponents": {
+        "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index"
+    }
+}

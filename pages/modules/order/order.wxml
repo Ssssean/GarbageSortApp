@@ -1,0 +1,90 @@
+<import src="../../component/components.wxml"></import>
+<import src="../../component/module/module.wxml"></import>
+
+<ui-fix-nav-bar title="我的订单" custom-style="{{ { borderBottom: 'none', backgroundColor: '#fff' } }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view>
+    <view class="condition-container" id="suggestion-title">
+        <template is="search-bar" data="{{  params: { isHotSearch: true, from: 'order', placeholder: '搜索商标/专利/版权/认证..', style: 'padding: 20rpx 0 0 0;' } }}"></template>
+        <ui-sticky scroll-top="{{ scrollTop }}" top="{{ NAV_HEIGHT }}" custom-style="{{ customStyle }}"class="header sticky-header" stick-on-tap="stick-on-tap" style="">
+            <template is="order-sticky-menu" data="{{ navList, orderLabel, orderTags, orderTagsStyle }}"></template>
+            <view slot="sticky">
+                <template is="order-sticky-menu" data="{{ navList, orderLabel, orderTags, orderTagsStyle }}"></template>
+            </view>
+        </ui-sticky>
+    </view>
+
+    <view wx:if="{{ !authShow }}">
+        <template is="auth-show" data="{{ run: 'toAuthPage' }}"/>
+    </view>
+    <view wx:elif="{{ noOrder }}">
+        <template is="no-order" data="{{ run: 'reloadList' }}"/>
+    </view>
+    
+    <view wx:else>
+        <template is="order-list" data="{{ orders, domain, orderBuffer }}"></template>
+    </view>
+
+    <view style="height:{{NAV_HEIGHT/2}}px"></view>
+
+    <!--订单类型-->
+    <ui-popup bindhide="onPopupHidden" cropout show="{{ pop_0 }}" position="top" top="{{ popup_NAV_HEIGHT }}" height="{{ popupHeight }}" mask-style="{{ { top: popup_NAV_HEIGHT +'px' } }}">
+        <view class="ui-top-pop">
+            <scroll-view scroll-y="scroll-y">
+                <ui-check-list max="1" label-position="left" options="{{ orderType }}" type="plain" value="{{ shop_type }}" bindchange="onOrderTypeChange"></ui-check-list>
+            </scroll-view>
+        </view>
+    </ui-popup>
+    <!--订单状态-->
+    <ui-popup bindhide="onPopupHidden" cropout show="{{ pop_1 }}" position="top" top="{{ popup_NAV_HEIGHT }}" height="{{ popupHeight }}" mask-style="{{ { top: popup_NAV_HEIGHT +'px' } }}">
+        <view class="ui-top-pop">
+            <scroll-view scroll-y="scroll-y" style="max-height:{{scroHeight - 200 }}px">
+                <ui-check-list max="10" label-position="left" options="{{ statusList }}" type="plain" value="{{ status }}" bindchange="onStatusChange"></ui-check-list>
+            </scroll-view>
+            <view class="ui-sub ui-row ui-row-border-top" style="height:50px; margin-top: 0">
+                <view bindtap="onStatusReset" data-idx="1"  class="ui-col ui-col-border-right ui-col-align-center align-center valign-middle" style="">
+                    <view class="ui-col-content align-center valign-middle">
+                        重置
+                    </view>
+                </view>
+                <view bindtap="onStatusFilter" data-idx="1"  class="complete ui-col ui-col-align-center align-center valign-middle" style="">
+                    <view class="ui-col-content align-center valign-middle">
+                        完成
+                    </view>
+                </view>    
+            </view>
+        </view>
+    </ui-popup>
+    <!--筛选-->
+    <ui-popup bindhide="onPopupHidden" cropout show="{{ pop_2 }}" position="top" top="{{ popup_NAV_HEIGHT }}" height="{{ popupHeight }}" mask-style="{{ { top: popup_NAV_HEIGHT +'px' } }}">
+        <view class="ui-top-pop">
+            <scroll-view scroll-y="scroll-y" style="/*height: {{ scroHeight - 300 }}px;*/">
+                <view class="ui-form ui-row ui-row-border-top">
+                    <view class="ui-col-content">
+                        <i-input value="{{ contract_id }}" title="订单编号"  placeholder="请输入订单号" i-title-class="ui-input-title"  maxlength="32" bind:change="onInput" data-key="contract_id"/>
+                        <i-input value="{{ shenqinghao }}" title="申请编号"  placeholder="请输入申请编号" i-title-class="ui-input-title" maxlength="32" bind:change="onInput" data-key="shenqinghao"/>
+                        <i-input value="{{ content }}" title="订单内容"  placeholder="请输入订单内容" i-title-class="ui-input-title"  maxlength="32" bind:change="onInput" data-key="content"/>
+                        <i-input value="{{ leixing }}" title="业务类型"  placeholder="请输入业务类型" i-title-class="ui-input-title"  maxlength="32" bind:change="onInput" data-key="leixing"/>
+                        <i-input value="{{ start_time }}" title="开始日期" placeholder="开始日期" disabled bindtap="onSeletDate" i-title-class="ui-input-title"/>
+                        <i-input value="{{ end_time }}" title="结束日期"  placeholder="结束日期"  disabled bindtap="onSeletDate" i-title-class="ui-input-title" i-class="ui-last-input"/>
+                    </view>
+                </view>
+            </scroll-view>
+            <view class="ui-sub ui-row ui-row-border-top" style="height:50px;">
+                <view bindtap="onFormReset" data-idx="2"  class="ui-col ui-col-border-right ui-col-align-center align-center valign-middle" style="">
+                    <view class="ui-col-content align-center valign-middle">
+                        重置
+                    </view>
+                </view>
+                <view bindtap="onFormFilter" data-idx="2"  class="complete ui-col ui-col-align-center align-center valign-middle" style="">
+                    <view class="ui-col-content align-center valign-middle">
+                        完成
+                    </view>
+                </view>
+            </view>
+        </view>
+    </ui-popup>
+</view>
+
+<template is="scroll-top" wx:if="{{ isSticky }}"></template>

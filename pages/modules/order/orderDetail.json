@@ -1,0 +1,10 @@
+{
+    "usingComponents": {
+        "i-icon": "/packages/iview-weapp/icon/index",
+        "i-tag": "/packages/iview-weapp/tag/index",
+        "i-steps": "/packages/iview-weapp/steps/index",
+        "i-step": "/packages/iview-weapp/step/index",
+        "ui-divider": "/packages/touchui-wx-components/ui-divider/dist/index",
+        "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index"
+    }
+}

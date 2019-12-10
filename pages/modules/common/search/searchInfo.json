@@ -1,0 +1,21 @@
+{
+    "usingComponents": {
+        "i-badge": "/packages/iview-weapp/badge/index",
+        "i-button": "/packages/iview-weapp/button/index",
+        "i-input": "/packages/iview-weapp/input/index",
+        "i-panel": "/packages/iview-weapp/panel/index",
+        "i-tag": "/packages/iview-weapp/tag/index",
+        "i-icon": "/packages/iview-weapp/icon/index",
+        "i-input-number": "/packages/iview-weapp/input-number/index",
+
+        "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index",
+        "ui-divider": "/packages/touchui-wx-components/ui-divider/dist/index",
+        "ui-check-list": "/packages/touchui-wx-components/ui-check-list/dist/index",
+        "ui-nav-bar": "/packages/touchui-wx-components/ui-nav-bar/dist/index",
+        "ui-fixed-view": "/packages/touchui-wx-components/ui-fixed-view/dist/index",
+        "ui-navigate-back": "/packages/touchui-wx-components/ui-navigate-back/dist/index",
+        "ui-badge": "/packages/touchui-wx-components/ui-badge/dist/index",
+        "ui-popup": "/packages/touchui-wx-components/ui-popup/dist/index",
+        "ui-sticky": "/packages/touchui-wx-components/ui-sticky/dist/index"
+    }
+}

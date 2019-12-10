@@ -1,0 +1,83 @@
+<!--pages/modules/reserve/address/address.wxml-->
+<!-- 显示地址的页面-->
+
+<ui-fix-nav-bar slot="nav-bar" title="我的地址" custom-style="{{ { backgroundColor: '#34be79'} }}"></ui-fix-nav-bar>
+
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<i-message id="imessage" custom-style="top:{{NAV_HEIGHT}}" />
+
+
+
+<view wx:if="{{addressData.length > 0}}">  
+<scroll-view scroll-y>
+    <view wx:for="{{addressData}}" wx:for-item="addresItem" >
+        <view class="ui-card-box">
+              <view class="ui-card">
+                  <view class="ui-card-content">
+                      <view class="ui-row">
+                          <view class="ui-col">
+                              <view class="ui-col-image">
+                                  <i-icon type="addressbook_fill" size="25" color="#80848f"/>
+                              </view>
+                              <view class="address-item-name">
+                                {{addresItem.name}}
+                              </view> 
+
+                              <view class="address-item-phone">
+                                {{addresItem.mobile_phone}}
+                              </view>                       
+                          </view>  
+                      </view>
+
+                      <view class="ui-row">
+                          <view class="ui-col" style="margin-bottom: 10rpx;">
+                                <view class="ui-col-image">
+                                    <i-icon type="coordinates_fill" size="25" color="#80848f" />
+                                </view>
+                              <view class="address-item-address">
+                                {{addresItem.district}}{{addresItem.home}}
+                              </view>
+                          </view>
+                      </view>
+
+                      <view class="xian"></view>
+
+                      <view class="ui-row">
+                          <view class="ui-col" style="margin-top: 10rpx;"> 
+                              <view class="adress-item-radio">
+                                    <label>
+                                        <radio value='{{addresItem.id}}' bindtap='radio' data-type="{{addresItem.id}}" data-all="{{ addresItem }}"  checked="{{ addresItem.id == status }}" >
+                                            <view wx:if="{{ addresItem.id == status }}" class="radiostyle"> 已设为默认地址  </view>
+                                                <view wx:else style="color:#cdcdcd"> 设为默认地址 </view>    
+                                        </radio>
+                                    </label>   
+                              </view>
+                          </view>
+                          <view class="ui-col" style="margin-top: 10rpx;">
+                              <view class="address-item-edit" bindtap="editAddress" data-id="{{addresItem.id}}">编辑</view>
+                              <view class="address-item-delete" bindtap="deleteAddress" data-id="{{addresItem.id}}">删除</view>
+                          </view>
+                      </view>
+
+                  </view>
+              </view> 
+        </view>
+    </view>
+    </scroll-view>
+    
+    <view style="height:100px"></view>
+
+    <ui-fixed-view bottom="0" left="0" right="0">
+          <button class="fixed-view-content" bindtap="Goaddress">新增地址</button>
+    </ui-fixed-view>
+</view>
+<view wx:else>
+    <view class="title-box">
+      <image class="box-none" lazy-load="true" src="/images/none/cart_empty.png" />
+      <text>还没有地址</text>
+      <button class="ui-button" bindtap="Goaddress">新增地址</button>
+    </view>
+</view>
+
+

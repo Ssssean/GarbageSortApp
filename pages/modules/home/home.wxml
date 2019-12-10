@@ -1,0 +1,69 @@
+<import src="../../component/components.wxml" />
+<import src="../../component/menu/menu.wxml" />
+<import src="../../component/swiper/swiper.wxml" />
+<include src="../../component/weapp-close.wxml" />
+<import src="../../component/module/module.wxml" />
+
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+    <template is='swiper' data="{{ params:swiper }}"></template>
+    <template is='icons-group' data="{{ params:garbage  }}"></template>
+    <template is="news-title" data="{{params:title}}"></template>
+
+    <template is="list" data="{{params:news }}"></template>
+
+    <ui-popup show="{{ show }}" position="" background="transparent" touchmove="catchtouchmove">
+        <view class=" {{ showContent == 'voice'?'popupContent':'popupVoice' }}" style="{{ showContent == 'voice' ?'top:'+NAV_HEIGHT +'px':'' }}" >
+            <view wx:if="{{ showContent == 'voice'}}" animation="true">
+              <view class="voiceTitle">
+                请问您想查询什么？
+              </view>
+              <view class="show-search-box" >
+                <view hover-class="ui-btn-hover"  class="search-list" bindtap="searchGarbage" data-content="包装纸">
+                    包装纸
+                </view>
+                <view hover-class="ui-btn-hover"  class="search-list" bindtap="searchGarbage" data-content="塑料">
+                    塑料
+                </view>
+                <view hover-class="ui-btn-hover"  class="search-list" bindtap="searchGarbage" data-content="湿巾纸">
+                    湿巾纸
+                </view>
+                <view hover-class="ui-btn-hover"  class="search-list" bindtap="searchGarbage" data-content="瓜子壳">
+                    瓜子壳
+                </view>
+              </view>
+              <view class="voice-tabbar">
+                <view class="close-popup-voice" bindtap="closePopup">
+                  <span type="x" size="25" color="#FC8950" class="ui-icon icon-x" style="color: #34BE79; font-size: 60rpx;"></span>
+                </view>
+                <view hover-class="press" class="tabbarContent" catchtouchstart='startRecord' catchtouchend='stopRecord'>按住 说话</view>
+              </view>
+            </view>
+            <view wx:elif="{{ showContent == 'content' }}" >
+                <view class="close-popup" bindtap="closePopup">
+                    <span type="x" size="18" color="#FC8950" class="ui-icon icon-x" style="color: #34BE79; font-size: 18px;"></span>
+                </view>
+                <view class="iconDetails">
+                  <image src="{{currentChecked.pic_url}}"></image>
+                </view>
+                <view class="details">
+                  <text class="title1">
+                    {{currentChecked.title}}
+                  </text>
+                  <text class="content1">
+                    {{currentChecked.dsec}}
+                  </text>
+                  <text class="title2">
+                    投放要求
+                  </text>
+                  <text class="content2" wx:for="{{currentChecked.require}}">
+                    {{item}};
+                  </text>
+                </view>
+            </view>
+        </view>
+    </ui-popup>
+
+    <template is="garbageCategory" data="{{visible}}"></template>
+

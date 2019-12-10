@@ -1,0 +1,220 @@
+<import src="../../component/module/module.wxml" />
+<!--顶部栏-->
+<ui-nav-bar class="scrollTop" slot="nav-bar" custom-style="{{ navBarStyle }}">
+    <view class="ui-row" style="height:46px;">
+        <ui-navigate-back id="comNavigateBack" i-back-class="{{ backClass }}" style="flex:0 0 60px;"></ui-navigate-back>
+        <view class="ui-col valign-middle">
+            <view class="ui-col-content valign-middle">
+                <ui-tabs style="opacity: {{ tabOpacity }}" ink-bar="true" width="{{ tabsWidth }}px"  ink-bar-style="{{ inkBarStyle }}" tab-style="{{ tabStyle }}" index="{{ tabIndex }}" bindchange="tabChange">
+                    <ui-tab>
+                        <view class="">商品</view>
+                    </ui-tab>
+                    <ui-tab>
+                        <view class="">所需文件</view>
+                    </ui-tab>
+                    <ui-tab>
+                        <view class="">服务流程</view>
+                    </ui-tab>
+                    <ui-tab>
+                        <view class="">申请指南</view>
+                    </ui-tab>
+                    <!--
+                    <ui-tab>
+                        <view class="">文件下载</view>
+                    </ui-tab>
+                    -->
+                </ui-tabs>
+            </view>
+        </view>
+		
+        <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 100px;">
+            <view class="ui-col-content align-center valign-middle"></view>
+        </view>
+
+    </view>
+</ui-nav-bar>
+
+<view style="height:{{ NAV_HEIGHT }}px; margin-top: {{ srcollTop }}px">
+    <image src="{{ goodsDetail.commodity_url }}" lazy-load="true"/>
+</view>
+
+<swiper style="height:{{ contentHeight }}px" class="content" current="{{ tabIndex }}" bindchange="tabContentChange">
+	
+    <!--商品详情-->
+    <swiper-item item-id="shop" catchtouchmove="{{  showTabs ? '' : 'onStopTouchMove' }}">
+        <scroll-view scroll-y style="height:{{ contentHeight }}px; visibility: {{ viewOpacity }}" scroll-top="{{ srcollViewTop }}" class="content_list" bindscroll="bindScroll">
+            <!--商品基本信息-->
+            <template is="basicInfo" data="{{ goodsDetail: goodsDetail, serviceImages: serviceImages, __fileReadOnly: __fileReadOnly, __applyReadOnly: __applyReadOnly }}"></template>
+        </scroll-view>
+    </swiper-item>
+	
+    <!--所需文件-->
+    <swiper-item item-id="file">
+        <scroll-view scroll-y style="height:{{ contentHeight }}px">
+            <view class="ui-divider">
+                <ui-divider padding="8" >
+                    <view style="color:#7b8196">所需文件</view>
+                </ui-divider>
+                <editor id="editor_file" data-id="file" class="editor-container" read-only="{{ editor_fileReadOnly }}" bindready="onEditors"></editor>
+            </view>
+            <view class="ui-placeholder"></view>
+        </scroll-view>
+    </swiper-item>
+
+    <!--服务流程-->
+    <swiper-item item-id="service">
+        <scroll-view scroll-y style="height:{{ contentHeight }}px">
+            <view class="ui-divider">
+                <ui-divider padding="8" >
+                    <view style="color:#7b8196">服务流程</view>
+                </ui-divider>
+                <!--渲染服务流程内部的图片-->
+                <view class="image-contianer">
+                    <image src="{{ item }}" mode="widthFix" wx:for="{{serviceImages}}" wx:key="key" wx:for-index="key" wx:for-item="item" bindtap="previewqrTap" data-img="{{item}}" />
+                </view>
+                <editor id="editor_service" data-id="service" class="editor-container" read-only="{{ editor_serviceReadOnly }}" bindready="onEditors"></editor>
+             </view>
+            <view class="ui-placeholder"></view>
+        </scroll-view>
+    </swiper-item>
+	
+    <!--申请指南-->
+    <swiper-item item-id="apply">
+        <scroll-view scroll-y style="height:{{ contentHeight }}px">
+            <view class="ui-divider">
+                <ui-divider padding="8">
+                    <view style="color:#7b8196">申请指南</view>
+                </ui-divider>
+                <editor id="editor_apply" data-id="apply" class="editor-container" read-only="{{ editor_applyReadOnly }}" bindready="onEditors"></editor>
+            </view>
+            <view class="ui-placeholder"></view>
+        </scroll-view>
+    </swiper-item>
+</swiper>
+
+
+<!--底部栏-->
+<ui-fixed-view bottom="0" left="0" right="0">
+    <view wx:if="{{ client_pay_status !== false }}" class="fixed_bottom {{iphonex ? 'iphonexBottom' : ''}} ui-row" style="height:50px;">
+        
+        <!--打开客服-->
+        <!--<view class="fixed_bottom_ui-col ui-col ui-col-align-center align-center valign-middle" style="padding-right: 1px;">
+            <view class="ui-col-content align-center valign-middle">
+                <view class="fixed_bottom_box">
+                    <image src="../../../images/goods_service.png" />
+                    <button open-type="contact" session-from="weapp"></button>
+                </view>
+            </view>
+        </view>-->
+
+        <!--购物车-->
+        <view class="fixed_bottom_ui-col ui-col ui-col-align-center align-center valign-middle" style="padding-right: 1px; flex:0 0 80px;">
+            <view class="ui-col-content align-center valign-middle">
+                <view class="fixed_bottom_box" bindtap="goShopCar">
+                    <!--<text type="icon-jd-cart" size="26"  class="ui-icon icon-jd-cart" style="color: #7F7F7F;font-size: 26px;" />-->
+                    <image src="../../../images/shopping_cart.png" />
+                    <ui-badge wx:if="{{shopNum}}" text="{{shopNum}}" custom-style="{{cartStyle}}"></ui-badge>
+                </view>
+            </view>
+        </view>
+
+
+        <!--加入收藏-->
+        <!--<view class="fixed_bottom_ui-col ui-col ui-col-align-center align-center valign-middle" style="padding-right: 1px;">
+            <view class="ui-col-content align-center valign-middle">
+                <view class="fixed_bottom_box" bindtap="{{ is_favicon == 0 ? 'addfav' : 'delfav' }}">
+                    <image wx:if="{{ is_favicon == 0 }}" src="../../../images/goods_collect.png" />
+                    <image wx:if="{{ is_favicon == 1 }}" src="../../../images/goods_collect_checked.png" />
+                </view>
+            </view>
+        </view>-->
+
+        <template is="client_pay_navbar_{{ client_pay_status }}" data="{{ status: client_pay_status, isAuthLogin: isAuthLogin}}"></template>    
+    </view>
+</ui-fixed-view>
+
+<!--购物|立即付款弹出框-->
+<ui-popup show="{{ is_popupShow }}" position="bottom" background="transparent">
+    <view class="goods-popup">
+        <view class="ui-row" style="height:100px;">
+            <view class="close-popup" bindtap="closePopup">
+                <span type="x" size="18" color="#FC8950" class="ui-icon icon-x" style="color: #3296e6; font-size: 18px;"></span>
+            </view>
+
+            <view class="ui-col ui-col-3 ui-col-align-center align-center valign-middle" style="flex: 0 0 25%;">
+                <view class="ui-col-content align-center valign-middle">
+                    <view class="pop-img-box">
+                        <image src="{{ goodsDetail.pic_url.match('^\/images') ? '' : domain }}{{ goodsDetail.pic_url }}" lazy-load="true" bindtap="previewqrTap" data-img="{{goodsDetail.pic_url}}"  class="goods-thumbnail" />
+                    </view>
+                </view>
+            </view>
+
+            <view class="ui-col ui-col-align-center align-center valign-middle" style="">
+                <view class="ui-col-content align-center valign-middle">
+                    <view class="pop-goods-des">
+                        <view class="pop-goods-title">{{goodsDetail.name}}</view>
+                        <view class="pop-goods-price">¥{{goodsDetail.price}}
+                            <text wx:if="{{goodsDetail.oprice && goodsDetail.price < goodsDetail.oprice}}" class="oprice">¥{{goodsDetail.oprice}}</text>
+                        </view>
+                        <!--<view class="pop-goods-guige" wx:if="{{goodsDetail.specInfo}}">{{propertyChildNames ? propertyChildNames:'请选择规格属性'}}</view>-->
+                    </view>    
+                </view>
+            </view>
+        </view>
+
+
+        <view class="goodsDetail-propertychild-box {{iphonex ? 'iphonexPropertychild' : ''}}" style="{{ goodsDetail.is_xiaoxiang == 1 ? 'margin-bottom: 50px;' : '' }}">
+            
+            <view class="size-label-box ui-row" style="">
+                <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-left: 10px;">
+                    <view class="ui-col-content align-left valign-middle">
+                        <view class="good-property-name-popup">数量
+                            <!--<text class="sp_ts">{{ goodsDetail.sp_ts }}</text>-->
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+            <view class="label-stepper-box">
+                <view class="num-box">
+                    <i-input-number value="{{ buyNumber }}" min="1" max="99" bindchange="changeBuyNumber" />
+                </view>
+            </view>
+
+            <view class="size-label-box ui-row" wx:if="{{ goodsDetail.is_xiaoxiang == 1 }}">
+                <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-left: 10px;">
+                    <view class="ui-col-content align-left valign-middle">
+                        <view class="good-property-name-popup"> 小项数量
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+
+            <view class="label-stepper-box" wx:if="{{ goodsDetail.is_xiaoxiang == 1 }}">
+                <view class="num-box">
+                    <i-input-number value="{{ itemNum }}" min="10" max="1000" bindchange="changeItemNumber" />
+                </view>
+            </view>
+
+        </view>
+
+        <ui-fixed-view bottom="0" left="0" right="0">
+            <view class="fixed_bottom fixed_bottom_popup {{ iphonex ? 'iphonexBottom' : ''}} ui-row" style="height:50px;">
+                <view wx:if="{{ !is_showBuyBtn }}" class="ui-col valign-middle"  style="">
+                    <view class="ui-col-content valign-middle">
+                        <view class="form_list_buy" bindtap="addShopCar">加入购物车</view>
+                    </view>
+                </view>
+                <view wx:if="{{ is_showBuyBtn }}" class="ui-col valign-middle" style="">
+                    <view class="ui-col-content valign-middle">
+                        <view class="form_list_buy" bindtap="buyNow">立即购买</view>
+                    </view>
+                </view>
+            </view>
+            <view class="{{iphonex ? 'iphonex-bottom' : ''}}"></view>
+        </ui-fixed-view>    
+    </view>
+</ui-popup>
+
+<template is="scroll-top" wx:if="{{ isSticky }}" data="{{  bottom: 100 }}"></template>

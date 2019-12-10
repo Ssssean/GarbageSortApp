@@ -1,0 +1,88 @@
+<!--pages/modules/user_ljfl/order/order.wxml-->
+<import src="../../../component/components.wxml"></import>
+<import src="../../../component/module/module.wxml"></import>
+<ui-fix-nav-bar slot="nav-bar" title="我的订单" custom-style="{{ { backgroundColor: '#34be79'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view class="sticky-in-relative-container">
+    <ui-sticky scroll-top="{{ scrollTop }}" top="{{NAV_HEIGHT}}">
+        <ui-tabs index="{{ current }}" bindchange="handleChange"  tab-style="{{ tabstyle }}" active-tab-style="{{ activetabStyle }}">
+            <ui-tab>全部</ui-tab>
+            <ui-tab>等待预约</ui-tab>
+            <ui-tab>等待取件</ui-tab>
+            <ui-tab>完成取件</ui-tab>
+        </ui-tabs>
+
+        <view slot="sticky">
+            <ui-tabs index="{{ current }}" bindchange="handleChange"  tab-style="{{ tabstyle }}" active-tab-style="{{activetabStyle}}">
+                <ui-tab>全部</ui-tab>
+                <ui-tab>等待预约</ui-tab>
+                <ui-tab>等待取件</ui-tab>
+                <ui-tab>完成取件</ui-tab>
+            </ui-tabs>
+        </view>
+    </ui-sticky>
+</view>
+
+<view class="order-content-box">
+        <view wx:if="{{ !authShow }}">
+            <template is="auth-show" data="{{ run: 'toAuthPage' }}"/>
+        </view>
+       
+        <view wx:elif="{{ orderData[page].length > 0 }}">
+            <view wx:for="{{ orderData }}" wx:for-item="orderItem" wx:key="key" wx:for-index="orderPage">
+                <view class="ui-card-box" wx:for="{{ orderItem }}" wx:key="id" wx:for-item="item" wx:for-index="orderIndex">
+                    <view class="ui-card" style="border-radius:25rpx;">
+                        <view class="ui-card-content">
+                            <!--订单号和订单日期（第一行）-->
+                            <template is="orderno" data="{{ item:item }}"></template>
+                             <!--订单状态和客户信息-->
+                            <template is="order-status" data="{{ order: item, WaitStatus:WaitStatus,ClearStatus:ClearStatus }}"></template>
+                            
+                            <view class="xian"></view>
+
+                            <!--订单详情-->
+                            <template is="order-content" data="{{ item:item,ClearStatus:ClearStatus }}"></template>
+
+                            <!-- 完成取件的员工信息 -->
+                            <block wx:if="{{ usertype == 'e' }}">
+                                <template is="order-e-picksuccess" data="{{ order:item,PickSuccess:PickSuccess}}"></template>
+                            </block>
+
+                            <!--订单提示信息-->
+                            <view wx:if="{{ usertype == 'u' }}">
+                                 <template is="order-tishi" data="{{ item:item,WaitStatus:WaitStatus}}"></template>
+                            </view>
+
+                            <!--预约失败的提示信息-->
+                            <template is="order-error" data="{{ item:item,StatusFail:StatusFail }}"></template>
+                           
+
+                            <!--<button class="ui-button" style="background:#34be79" bindtap="GoPickSuccess" data-id="{{ item.id }}"  data-status="{{ item.status }}" data-title="完成取件" >完成取件</button>-->
+
+                            <!--订单的按钮-->
+                            <view wx:if="{{ usertype == 'e' }}">
+                                <template is="order-e-botton" data="{{ item:item,WaitStatus:WaitStatus,orderPage:orderPage,orderIndex:orderIndex,PickSuccess:PickSuccess,WaitPick:WaitPick }}"></template>    
+                            </view>
+                            <view wx:else>
+                               <template is="order-u-botton" data="{{ item:item,ClearStatus:ClearStatus,StatusFail:StatusFail,orderPage:orderPage,orderIndex:orderIndex,WaitPick:WaitPick,WaitStatus:WaitStatus,PickSuccess:PickSuccess }}"></template>
+                            </view>
+
+
+
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!--回到顶部-->
+            <template is="scroll-top" wx:if="{{ isSticky }}"></template>
+        </view>
+        
+        <view wx:else class="no-more-goods">
+            <image src="../../../../images/none/empty_order.png" class="no-order-img"/>
+            <view class="text">没有相关订单</view>
+        </view>
+</view>
+
+
+

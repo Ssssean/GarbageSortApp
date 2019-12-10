@@ -1,0 +1,75 @@
+page {
+    background-color: #f0f0f0;
+}
+
+.user-portrait,
+.user-quick-list {
+    padding: 30rpx 15rpx;
+    border: none !important;
+    margin-top: 25rpx !important;
+    border-radius: 20rpx !important;
+}
+
+.user-portrait {
+    min-height: 112px;
+}
+
+.user-quick-list {
+    padding: 0;
+}
+
+.user-quick-list .image {
+    width: 60rpx;
+    height: 60rpx;
+    margin-right: 12rpx;
+}
+
+.user-avatar {
+    border-radius: 50%;
+    float: left;
+    display: block;
+    overflow: hidden;
+    width: 100rpx;
+    height: 100rpx;
+    box-shadow: 0 0.16rem 0.32rem 0 rgba(0, 0, 0, 0.05);
+}
+
+.user-nickname {
+    color: #333333;
+    display: block;
+    font-size: 34rpx;
+    margin-bottom: 12rpx;
+    font-weight: 300;
+    letter-spacing: 3rpx;
+    min-height: 16.304rpx;
+}
+
+.icon-arrow-right,
+.icon-setting {
+    font-size: 14px;
+    color: #3295e6 !important;
+}
+
+.user-settings {
+    text-align: left;
+}
+
+.user-box {
+    float: left;
+    width: 70%;
+    margin-left: 30rpx;
+}
+
+.ui-contact-button {
+    padding: 0;
+    color: #495060;
+    text-align: left;
+    background: transparent;
+}
+
+
+/*去掉小程序按钮边框*/
+
+.ui-contact-button::after {
+    border: none;
+}

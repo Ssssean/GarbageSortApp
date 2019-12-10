@@ -1,0 +1,258 @@
+<template name="search-bar">
+    <view class="ui-row ui-shadow" style="{{ params.style ? params.style : 'padding: 20rpx 0;' }}background-color:#fff;" bindtap="tapSearch" data-from="{{ params.from }}" data-is-hot-search="{{ params.isHotSearch }}" data-placeholder="{{params.placeholder}}">
+        <view class="ui-col-12">
+            <view class="ui-search-input">
+                <i-icon type="search" size="26" color="#3C8CCB"/>{{params.placeholder}}
+            </view>
+        </view>
+    </view>
+</template>
+
+<template name="search-bar-ljfl">
+    <view class="ui-row ui-shadow" style="{{ params.style ? params.style : 'padding: 20rpx 0;' }}background-color:#fff;"  data-from="{{ params.from }}" data-is-hot-search="{{ params.isHotSearch }}" data-placeholder="{{params.placeholder}}">
+        <view class="ui-col-12">
+            <view class="ui-search-input">
+              <view class="ui-col-10" bindtap="tapSearch"  style="width:90%">
+                  <i-icon type="search" size="26" color="#34be79"/>{{params.placeholder}}
+              </view>
+              <view style="padding-left: 240px;">
+                 <i-icon type="translation_fill" size="26"  color="#34be79"  data-type="voice" bindtap="tapIconsGroup"/>
+              </view>
+               
+            </view>    
+        </view>
+         <view class="ui-col-2">
+            <view class="camera_fill" data-type="photo" bindtap="tapIconsGroup">
+              <i-icon type="camera_fill" size="30"  color="#fff" />
+            </view>
+            
+        </view>
+        
+
+       
+    </view>
+</template>
+
+
+<template name="block-title">
+    <view class="block-title">
+        <text>{{params.title}}</text> <text class="subtitle">{{params.subtitle}}</text>
+        <text wx:if="{{params.isMore}}" bindtap="tapBlock" class="more" data-params="{{ { link: params.moreLink + '&title=' + params.title  } }}">查看更多 <text class="ui-icon icon-arrow-right"></text></text>
+    </view>
+</template>
+
+<template name="image-block">
+    <view class="image-block card-block">
+        <template is="block-title" data="{{params: params}}" />
+        <view class="ui-row-list">
+            <view wx:for="{{params.items}}" bindtap="tapBlock" data-module-id="{{params.type}}" data-params="{{ item }}" data-link="{{item.link}}" wx:key="key" wx:for-index="key" wx:for-item="item" class="image-block-item ui-col-{{params.lineNum}}">
+                <view class="image-block-box">
+                    <image lazy-load="true" src="{{item.pic_url}}" />
+                </view>
+            </view>
+        </view>
+        <view style="clear:both;"></view>
+    </view>
+</template>
+
+<template name="shop-block">
+    <view class="image-block shop-block">
+        <view class="shop-block-container {{params.className}}">
+            <template is="block-title" data="{{params: params}}"></template>
+            <view class="ui-row-list">
+                <view wx:for="{{params.items}}" bindtap="tapBlock" data-module-id="{{params.type}}" data-link="{{item.link}}" wx:key="key" wx:for-index="key" wx:for-item="item" class="image-block-item shop-block-item ui-col-{{params.lineNum}}">
+                    <view class="image-block-box shop-block-box">
+                        <view class="shop-block-image">
+                            <view class="bubble">{{item.shop_type}}</view>
+                            <image lazy-load="true" src="{{item.pic_url}}"  />
+                        </view>
+                        <view class="shop-block-text">{{item.titie}}</view>
+                        <view class="rmb">¥ {{item.price}}</view>
+                    </view>
+                </view>
+            </view>
+            <view style="clear:both;"></view>
+        </view>
+    </view>
+</template>
+
+
+<template name="shop-grid">
+    <view class="image-block shop-block shop-grid">
+        <view class="shop-block-container {{params.className}}" style="{{params.style}}">
+            <template is="block-title" data="{{params: params}}"></template>
+            <view class="ui-row-list " style="padding-bottom: 12px;">
+                <view wx:for="{{params.items}}" bindtap="tapBlock" data-params="{{ item }}" data-module-id="{{params.type}}" data-link="{{item.link}}" wx:key="key" wx:for-index="key" wx:for-item="item" class="image-block-item shop-block-item ui-col-{{params.lineNum}}">
+                    <view class="image-block-box ui-row" hover-class="ui-btn-hover">
+                        <view class="ui-col-content align-center valign-middle">
+                            <view class="ui-ellipsis title">{{ item.titie }}</view>
+                            <view class="ui-ellipsis price">¥ {{item.price}}</view>
+                        </view>
+                    </view>
+                </view>
+                <view style="clear:both;"></view>
+            </view>
+            <view style="clear:both;"></view>
+        </view>
+    </view>
+</template>
+
+<template name="news-title">
+  <view class="news-title">
+    {{params}}
+  </view>
+</template>
+
+<template name="popup">
+  <view wx:if="{{params.showModalStatus}}">
+    <view>{{params.showModalStatus}}</view>
+    <view class="commodity_screen" bindtap="hideModal">
+      <view wx:if="{{params.showVoiceArea}}">
+        <view class="voiceTitle">
+          请问您想查询什么？
+        </view>
+        <!-- <view wx:for=""> -->
+          <view></view>
+        <!-- </view> -->
+        <view class="voice-tabbar">
+          <view class="close-popup-voice" bindtap="closePopup">
+            <span type="x" size="18" color="#FC8950" class="ui-icon icon-x" style="color: #3296e6; font-size: 18px;"></span>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{params.showContent}}">
+        <view class="close-popup" bindtap="closePopup">
+            <span type="x" size="18" color="#FC8950" class="ui-icon icon-x" style="color: #3296e6; font-size: 18px;"></span>
+        </view>
+        <view class="iconDetails">
+          <image src="{{params.pic_url}}"></image>
+        </view>
+        <view class="description">
+          <text>{{description}}</text>
+        </view>
+        <view class="details">
+          <text class="title1">
+            会商结果显示，全国大部地区扩散条件总体较好
+          </text>
+          <text class="content1">
+          河北中南部、山东西部和河南北部可能出现中度及以上污染；新疆南疆地区受沙尘影响，可能出现间歇性轻度及以上污染。
+          </text>
+          <text class="title2">
+            预计空气质量以良至轻度污染为主
+          </text>
+          <text class="content2">
+            其中，11月2-4日，东北区域辽宁地区可能出现短时中度污染；4-6日，京津冀及周边区域扩散条件不利
+          </text>
+        </view>
+    </view>
+  </view>
+</template>
+
+<template name="garbageCategory">
+  <view class="garbageCategory">
+    <view class="buttonVisible {{ visible? 'drawerVisible' : '' }}" bindtap="drawerVisible">
+      <text type="arrow-left" size="12" color="#27323f" class="ui-icon {{ visible ?  'icon-arrow-right' : 'icon-arrow-left' }} triangleStyle" />
+    </view>
+    <i-drawer mask="{{false}}" mode="right" visible="{{visible}}">
+
+      <view class="title">垃圾分类</view>
+      <view class="sort">
+        <view class="text" data-type="word" bindtap="tapIconsGroup"><i-icon type="search" size="30" color="#fff" style="flex:1"/><view style="flex:1">文字查询</view></view>
+        <view class="voice" data-type="voice" bindtap="tapIconsGroup"><i-icon type="translation" size="30" color="#fff" style="flex:1"/><view style="flex:1">语音查询</view></view>
+        <view class="photo" data-type="photo" bindtap="tapIconsGroup"><i-icon type="camera" size="30" color="#fff" style="flex:1"/><view style="flex:1">拍照识别</view></view>
+      </view>
+    </i-drawer>
+  </view>
+</template>
+
+<template name="list">
+  <view class="list" bindtap="showNewsDetails" data-id="{{item.id}}" wx:for="{{params}}" wx:key="">
+    <view class="list-image-content">
+      <image src="{{item.news_photo}}" class="list-image"></image>
+    </view>
+    <view class="list-text">
+      <view class="list-text-title">{{item.intro}}</view>
+      <view class="list-text-time">{{item.create_time}}</view>
+    </view>
+  </view>
+</template>
+
+<template name="goodsDescription">
+  <view class="goodsDescription">
+    <view class="goodsImage">
+      <image src="{{params.shop_url}}"></image>
+    </view>
+    <view class="goodsValue" >
+      <view class="goodsType" >
+        <i-icon type="commodity" />
+        {{params.shop_title}}
+      </view>
+      <view class="goodsPrice">
+        <image src="/images/tree.png" mode="scaleToFill" style="height:30rpx;width:30rpx"/>{{params.shop_price}}
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="goodsIntroduction">
+  <view style="margin-bottom:50px">
+    <view class="goodsDetail">商品详情</view>
+    <view class="goodsLimit" wx:for="{{params}}">{{item}}</view>
+  </view>
+  <view class="exchange" bindtap="exchange">
+    立即兑换
+  </view>
+</template>
+
+<template name="orderDetail">
+  <view class="xian"></view>
+                  
+  <view class="ui-row-content">
+
+    <view class="ui-row"> 
+        <view class="ui-col-2">
+            <text class="order-content-left">客户姓名:</text>
+        </view>
+        <view class="ui-col">
+            <text class="order-text">{{item.name}}</text>
+        </view>  
+    </view>
+
+    <view class="ui-row"> 
+        <view class="ui-col-2">
+            <text class="order-content-left">客户地址:</text>
+        </view>
+        <view class="ui-col">
+            <text class="order-text">{{item.address}}</text>
+        </view>
+    </view>
+
+    <view class="ui-row"> 
+        <view class="ui-col-2">
+            <text class="order-content-left">客户电话:</text>
+        </view>
+        <view class="ui-col">
+            <text class="order-text">{{item.phone}}</text>   
+        </view>                      
+    </view>
+
+    <view class="ui-row"> 
+        <view class="ui-col-2">
+            <text class="order-content-left">兑换商品:</text>
+        </view>
+        <view class="ui-col">
+            <text class="order-text">{{item.goods}}</text>
+        </view>  
+    </view>
+
+    <view class="ui-row"> 
+        <view class="ui-col-2">
+            <text class="order-content-left">备注信息:</text>
+        </view>
+        <view class="ui-col">
+            <text class="order-text">{{item.noteinfo}}</text>
+        </view>
+    </view>
+  </view>
+</template>

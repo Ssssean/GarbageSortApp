@@ -1,0 +1,66 @@
+<!--pages/modules/common/ljfl_search/lhfl_search.wxml-->
+<import src="../../../component/components.wxml" />
+<import src="../../../component/module/module.wxml"></import>
+
+<!--搜索框-->
+<view class="sticky-in-relative-container" style="position: fixed; top: 0;width: 100%;z-index:2">
+   <view class="ui-row ui-shadow"  style="padding: 20rpx 0;background-color:#fff;">
+        <view class="ui-col-10">
+            <view class="ui-search-input">
+               <i-icon type="search" size="26" color="#34be79"/>
+               <input type="text" placeholder="搜索查询垃圾分类" bindinput="searchInput" value="{{ inputvalue }}" style="width:100%"/> 
+            </view>
+        </view>
+        <view class="ui-col-2 col-search-qingchu" vertical-align="middle" bindtap="clearInput">
+            <view>清除</view>
+        </view>
+   </view>
+</view>
+
+<!--占位-->
+<view style="height:58px"></view>
+
+<!--查询出的垃圾分类列表-->
+<view wx:if="{{ searchlist.length > 0 }}" >
+
+   <view wx:for="{{ searchlist }}" wx:for-item="searchItem" wx:key="key"> 
+      <view class="ui-row-list bordered" wx:if="{{ searchItem.length > 1 }}"  >
+         <view class="ui-row row-catelist"  wx:for="{{ searchItem }}" wx:key="id">
+            <view class="ui-col col-list-name"  vertical-align="middle" align="center">
+               {{item.name ? item.name : item.itemName}}
+            </view>
+            <view class="ui-col col-list-type"  vertical-align="middle">
+               <view class="card" style="background:{{ item.color }}">
+                {{item.chinese ? item.chinese : item.itemCategory}}
+               </view>
+            </view>
+         </view>
+      </view>
+   </view>
+
+</view>
+
+
+
+
+<view wx:if="{{ searchlist[0].length == 1 }}" >
+   <view class="search-content">
+      <view class="ui-row row-cate-shuyu"><text>【 {{ searchlist[0][0].name ? searchlist[0][0].name : searchlist[0][0].itemName}} 】属于</text></view>
+      <view class="ui-row">
+         <image src="{{ searchlist[0][0].image }}" class="row-cate-lajitong"/>
+      </view>
+      <view class="ui-row row-cate-laji" style="color:{{ searchlist[0][0].color }}">
+         <text>{{ searchlist[0][0].chinese ? searchlist[0][0].chinese : searchlist[0][0].itemCategory }}</text>
+      </view>
+   </view>
+</view>
+
+<view wx:if="{{ searchTishi }}">
+   <view class="ui-row row-cate-null">
+      <text>啊哦，查询不到数据，请重新输入关键词试试</text>
+   </view>
+</view>
+
+<!--回到顶部-->
+<template is="scroll-top" wx:if="{{ isSticky }}"></template>
+

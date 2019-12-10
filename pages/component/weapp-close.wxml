@@ -1,0 +1,16 @@
+<view wx:if="{{ __hookStoplogin }}" class="ui-modal-mask ui-modal-mask-show"></view>
+<view wx:if="{{ __hookStoplogin }}" class="ui-modal ui-modal-show">
+    <view class="ui-modal-main">
+        <view class="ui-modal-content">
+            <view class="ui-modal-title">系统提醒</view>
+            <view class="ui-modal-body">禁止登陆</view>
+            <view class="ui-modal-actions">
+                <view class="ui-modal-grid">
+                    <view class="ui-grid-item ui-modal-grid-item" style="width: 100%">
+                        <navigator open-type="exit" target="miniProgram" class="ui-modal-btn ui-modal-btn-ok" hover-class="ui-btn-hover">确定</navigator>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

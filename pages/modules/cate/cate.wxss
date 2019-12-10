@@ -1,0 +1,242 @@
+/* pages/modules/cate/cate.wxss */
+
+.search-header-box .ui-col-content .search-header-input {
+    border-radius: 40rpx;
+}
+
+.img-xiangji {
+    display: inline-block;
+    width: 60rpx;
+    height: 60rpx;
+}
+
+.img-huatong {
+    width: 50rpx;
+    height: 30rpx;
+    margin-left: 200px;
+}
+
+.container {
+    display: flex;
+}
+
+.imgbox {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-style: rgba(231, 231, 231, 0.6);
+}
+
+.ui-image {
+    width: 100%
+}
+
+.small-title {
+    font-size: 24rpx;
+    text-align: center;
+    margin-top: 20rpx;
+}
+
+.goods-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.goods-list {
+    flex: 0 0 33.33%;
+    margin-top: 40rpx;
+}
+
+.tab-item {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+}
+
+.sticky-in-relative-container {
+    position: relative;
+    height: 46px;
+}
+
+.goods-box .goods-list {
+    flex: 0 0 100%;
+}
+
+.cate-lajitong1 {
+    padding-top: 30rpx;
+    width: 180rpx;
+    height: 250rpx;
+}
+
+.cate-content {
+    padding: 25rpx;
+}
+
+.cate-content-one {
+    font-weight: bold;
+    font-size: 30rpx;
+}
+
+.ui-row-yaoqiu {
+    justify-content: left;
+    padding-left: 25rpx;
+    font-weight: bold;
+}
+
+.yaoqiu-text {
+    justify-content: left;
+    padding-bottom: 15rpx;
+    padding-right: 30rpx;
+}
+
+.yuan {
+    width: 16rpx;
+    height: 16rpx;
+    margin-top: 16rpx;
+    margin-right: 16rpx;
+    border-radius: 16rpx;
+}
+
+.cate-list {
+    line-height: 80rpx;
+    margin-top: 20rpx;
+}
+
+.catelistItem-name {
+    width: 100%;
+    padding-left: 30rpx;
+}
+
+.ui-fixed-view {
+    z-index: -2;
+}
+
+.ui-search-input {
+    text-align: left;
+}
+
+.search-bar-huatong {
+    width: 30rpx;
+    height: 30rpx;
+}
+
+.search-bar-xiangji {
+    width: 70rpx;
+    height: 70rpx;
+}
+
+.ui-col-content:nth-child(even) .catelistItem-name {
+    background-color: #ffffff;
+    border-bottom: 1rpx solid #cdcdcd;
+    border-top: 1rpx solid #cdcdcd;
+}
+
+.camera_fill {
+    width: 70rpx;
+    height: 70rpx;
+    background: #34be79;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 10px;
+    display: table-cell;
+}
+
+
+/* 语音识别的css */
+
+.popupContent {
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    opacity: 0.9;
+    background-color: #fff;
+}
+
+.popupVoice {
+    width: 80%;
+    background-color: #fff;
+    height: 900rpx;
+    margin: 0 10%;
+    border-radius: 10px;
+    overflow: hidden;
+    bottom: 80rpx;
+    position: fixed;
+}
+
+.voiceTitle {
+    font-size: 25px;
+    text-align: center;
+    width: 100%;
+    margin-top: 40rpx;
+}
+
+.voice-tabbar {
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    height: 30px;
+    width: 80%;
+    left: 50%;
+    margin-left: calc(-40% - 15px);
+}
+
+.close-popup-voice {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    flex: 1;
+}
+
+.iconDetails {
+    height: 200rpx;
+    width: 200rpx;
+    flex: 0.3;
+    margin-top: 15%;
+    margin-left: 35%;
+}
+
+.details>.title1,
+.details>.title2 {
+    font-weight: 900;
+    font-size: 40rpx;
+}
+
+.details>.content1 {
+    margin-left: 5px;
+    font-size: 31rpx;
+    line-height: 17px;
+}
+
+.details>.content2 {
+    display: flex;
+    flex-direction: column;
+    line-height: 14px;
+    font-size: 31rpx;
+}
+
+.tabbarContent {
+    background-color: #34BE79;
+    width: 30px;
+    height: 40px;
+    text-align: center;
+    flex: 3;
+    border-radius: 10rpx;
+    font-size: 18px;
+    line-height: 2.2;
+    color: #fff;
+}
+
+.yaoqiu-yuan {
+    flex: 0 0 10%;
+    justify-content: flex-end;
+    margin-left: 20px;
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: 16rpx;
+}

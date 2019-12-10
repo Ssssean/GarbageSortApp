@@ -1,0 +1,26 @@
+<ui-nav-bar slot="nav-bar" custom-style="{{ {backgroundColor:'#fff'} }}">
+    <view class="ui-row" style="height:46px;">
+        <view bindtap="navigateBack" class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 60px;">
+            <view class="ui-col-content align-center valign-middle">
+            <text>完成</text>
+            </view>
+        </view>
+
+        <view class="ui-col ui-col-align-center align-center valign-middle" style="">
+            <view class="ui-col-content align-center valign-middle">
+                <view>请选择日期</view>
+            </view>
+        </view>
+    
+        <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 60px;">
+            <view class="ui-col-content align-center valign-middle">
+
+            </view>
+        </view>
+
+    </view>    
+</ui-nav-bar>
+<view style="margin-top:{{NAV_HEIGHT}}px"></view>
+<view id="calendar-contianer">
+    <ui-v-calendar height="{{height - headerHeight}}" select-range-mode show-month-range="true" max-range="{{356}}" value="{{ defaultMonthrange }}" date-range="{{ monthrange }}" bindselectedstart="selectedStartHandler" bindselectedend="selectedEndHandler" bindfailed="failedHandler"></ui-v-calendar>
+</view>

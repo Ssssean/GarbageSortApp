@@ -1,0 +1,147 @@
+/* pages/modules/user_ljfl/order/order.wxss */
+
+page {
+    background: #e6e6e6;
+}
+
+ui-tabs {
+    background: #fff;
+}
+
+.order-image-dingdan {
+    padding: 0rpx 0rpx 0rpx 20rpx;
+}
+
+.ui-col-dingdan {
+    padding-top: 20rpx;
+    font-size: 25rpx;
+    color: #808080;
+}
+
+.order-dingdanhao {
+    padding-top: 5rpx;
+}
+
+.order-date {
+    padding-top: 8rpx;
+    padding-left: 100rpx
+}
+
+.ui-row-people image {
+    width: 50rpx;
+    height: 50rpx;
+    padding-left: 30rpx;
+    padding-right: 10rpx;
+    margin-top: 10px;
+}
+
+.ui-row-people {
+    margin-bottom: 20rpx;
+    margin-top: 10rpx;
+    padding-left: 20rpx;
+}
+
+.ui-row-people text {
+    padding-top: 5rpx;
+}
+
+.ui-row-content {
+    margin-top: 20rpx;
+    padding-left: 30rpx;
+    margin-bottom: 20rpx;
+    font-size: 24rpx;
+    line-height: 44rpx;
+}
+
+.xian {
+    background-color: #f0f0f0;
+    width: 100%;
+    height: 1rpx;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.ui-row {
+    justify-content: left;
+}
+
+.order-content-left {
+    color: #939394;
+}
+
+.ui-row-content image {
+    width: 150rpx;
+    height: 100rpx;
+    margin: 15rpx 0rpx 5rpx 110rpx;
+    border: 1px solid #f0f0f0;
+}
+
+.ui-row-tishi {
+    margin-top: -30rpx;
+    color: #939394;
+    padding-right: 30rpx;
+    line-height: 32rpx;
+    padding-left: 30rpx;
+    font-size: 24rpx;
+}
+
+.ui-button {
+    font-size: 28rpx;
+    width: 80px;
+    height: 35px;
+}
+
+.sticky-in-relative-container {
+    position: relative;
+    height: 48px;
+}
+
+.ui-card-content {
+    padding-bottom: 10px;
+}
+
+.no-more-goods {
+    width: 100%;
+    height: 500rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.no-more-goods .no-order-img {
+    width: 200rpx;
+    height: 200rpx;
+}
+
+.no-more-goods .text {
+    font-size: 26rpx;
+    color: #bfbfbf;
+}
+
+.order-content-box swiper-item {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ui-card-box {
+    margin-bottom: 15px;
+}
+
+.ui-col-createtime {
+    padding-top: 25rpx;
+    font-size: 25rpx;
+    color: #808080;
+    justify-content: flex-end;
+    padding-right: 30rpx;
+}
+
+.order-text {
+    font-size: 24rpx;
+}
+
+.order-content-error {
+    font-size: 24rpx;
+    color: #939394;
+}

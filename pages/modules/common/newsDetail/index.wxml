@@ -1,0 +1,18 @@
+<!--pages/modules/newsDetail/index.wxml-->
+<ui-fix-nav-bar slot="nav-bar" title=" 新闻动态 " custom-style="{{ { backgroundColor: '#34BE79'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<view class="title">{{newsDetail.title}}</view>
+
+<view class="authorInfo">
+  <text class="author">作者：{{newsDetail.author}}</text>
+  <text class="time">{{newsDetail.create_time}}</text>
+</view>
+
+<view class="image">
+  <image src="{{newsDetail.news_photo}}" class="newsImage"></image>
+</view>
+
+<view class="text">
+  {{newsDetail.content}}
+</view>

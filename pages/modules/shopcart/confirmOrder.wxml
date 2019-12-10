@@ -1,0 +1,16 @@
+<import src="../../component/module/module.wxml" />
+<ui-fix-nav-bar title="确认订单"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<i-toast id="toast"/>
+<i-message id="message" custom-style="top:{{NAV_HEIGHT}}"/>
+
+
+<i-modal title="确定要付款吗？" visible="{{ confirmModal }}" actions="{{ modalActions }}" bind:click="pay" />
+<i-modal title="支付结果" visible="{{ statusModal }}" actions="{{ modalStatusActions }}" bind:click="payStatus" />
+
+<template is="confirm-order-goods" data="{{ goods: goods, domain: domain }}"></template>
+<template is="confirm-order-invoice" data="{{ invoice: invoice, invoiceChecked: invoiceChecked, defaultChecked: defaultChecked, taitou: taitou, tax_vrate: tax_vrate }}"></template>
+<template is="confirm-order-money" data="{{ total_yuan_price: total_yuan_price, total_final_price: total_final_price, total_yh_price: total_yh_price, total_num: total_num, kdPrice: kdPrice }}"></template>
+
+<view class="ui-placeholder"></view>

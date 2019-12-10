@@ -1,0 +1,14 @@
+{
+    "usingComponents": {
+        "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index",
+        "ui-fixed-view": "/packages/touchui-wx-components/ui-fixed-view/dist/index",
+        "i-icon": "/packages/iview-weapp/icon/index",
+        "i-modal": "/packages/iview-weapp/modal/index",
+        "search-type": "/pages/component/searchType/index",
+        "i-card": "/packages/iview-weapp/card/index",
+        "ui-popup": "/packages/touchui-wx-components/ui-popup/dist/index",
+        "i-cell-group": "/packages/iview-weapp/cell-group/index",
+        "i-cell": "/packages/iview-weapp/cell/index",
+        "i-drawer": "/packages/iview-weapp/drawer/index"
+    }
+}

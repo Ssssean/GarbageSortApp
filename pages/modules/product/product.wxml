@@ -1,0 +1,52 @@
+<import src="../../component/menu/menu.wxml" />
+<import src="../../component/module/module.wxml" />
+<import src="../../component/swiper/swiper.wxml" />
+<include src="../../component/weapp-close.wxml" />
+
+<ui-nav-bar slot="nav-bar" custom-style="{{ { backgroundColor: '#fff' } }}">
+    <view class="ui-row" style="height:46px;">
+         <view class="search-header-box ui-col ui-col-align-center align-center valign-middle" style="">
+            <view class="ui-col-content align-center valign-middle">
+                <view class="search-header-input search-header-hover" bindtap="tapSearch" data-is-hot-search="true" data-placeholder="{{placeholder}}">
+                    <image lazy-load="true" src="../../../images/search.png" />
+                    <input class="input" type="text" confirm-type="search" disabled placeholder="{{placeholder}}" placeholder-style="color:#999" />
+                </view>
+            </view>
+         </view>
+    </view>
+</ui-nav-bar>
+
+<view style="height:{{NAV_HEIGHT}}"></view>
+<i-message id="imessage" custom-style="top:{{NAV_HEIGHT}}" />
+
+<view class="ui-row">
+    <scroll-view scroll-y="true" scroll-with-animation="true" wx:if="{{ categories }}" class="menu-list ui-col ui-col-3" style="flex: 0 0 25%; width: 25%; border-top-right-radius:13px;">
+        <i-collapse name="{{ false ? class_id : 0 }}" bindexpand="expandCommodityType">
+            <i-collapse-item data-id="{{ item.id }}" name="{{ item.id }}" i-collapse-item-arrow="ui-collapse-item-arrow"  i-class="ui-collapse-item {{ key == 0 ? 'ui-collapse-item-first' : '' }}" i-class-title="ui-collapse-item-title"  i-class-content="ui-collapse-item-content" wx:for="{{categories}}" wx:key="key" wx:for-index="key" wx:for-item="item" title="{{item.name}}">
+                <view slot="content">
+                    <i-cell-group>
+                        <i-cell data-id="{{ _item.id }}" data-class-id="{{ item.id }}"  data-index="{{ _key }}" data-type="{{ item.type }}"  data-swiper='{{ item.img_url }}'  data-text="{{ _item.name }}"  bindtap="getShop" i-cell-text-class="ui-cell-item-text" is-left-none="true" i-class="ui-cell-item {{ children_id == _item.id ? 'ui-cell-item-select' : '' }} " wx:for="{{ item.items }}" wx:key="_key" wx:for-index="_key" wx:for-item="_item" title="{{ _item.name }}"></i-cell>
+                    </i-cell-group>
+                </view>
+            </i-collapse-item>
+        </i-collapse>
+        <view style="height: {{ NAV_HEIGHT }}"></view>
+    </scroll-view>
+
+    <view class="menu-right ui-col" style="width: 73%;">
+      <view class="ui-col-content">
+        <scroll-view scroll-with-animation scroll-y>
+            <template is="swiper" data="{{ params: {items: swiperData} }}" />
+            <view class="ui-divider">
+                <ui-divider padding="8">
+                    <view style="color:#7b8196">{{activeCategoryName}}</view>
+                </ui-divider>
+            </view>
+            <template is="product-list" data="{{ shops: shops, class_imgtype: class_imgtype, class_type: class_type, domain: domain }}" />
+        </scroll-view>
+      </view>
+    </view>
+</view>
+
+<!--子产品列表-->
+<template is="product-children-list" data="{{ isChildrenShops, childrenShops, childrenShopTitle, domain }}"></template>

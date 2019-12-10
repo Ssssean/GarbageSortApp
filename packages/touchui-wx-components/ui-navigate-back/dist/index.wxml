@@ -1,0 +1,13 @@
+<view  class="ui-col ui-col-align-center align-center valign-middle">
+  <block wx:if="{{!hideBackBtn}}">
+    <view wx:if="{{isback}}" bindtap="navigateBack" class="ui-col-content align-center valign-middle">
+      <text type="arrow-left" size="14" color="#27323f" class="ui-icon icon-arrow-left i-back-class" style="color: #27323f;font-size: 14px;" />
+    </view>
+    <view wx:else class="ui-col-content align-center valign-middle">
+      <navigator open-type="exit" target="miniProgram">
+        <text type="arrow-left" size="14" color="#27323f" class="ui-icon icon-arrow-left" style="font-weight: 300;color: #27323f;font-size: 14px;" />
+      </navigator>
+    </view>
+  </block>
+  <slot name="left-btn"></slot>
+</view>

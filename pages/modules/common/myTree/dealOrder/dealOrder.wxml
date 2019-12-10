@@ -1,0 +1,28 @@
+<import src="../../../component/components.wxml" />
+<import src="../../../component/menu/menu.wxml" />
+
+
+<!-- 自定义导航 -->
+<ui-fix-nav-bar slot="nav-bar" title="{{ appName }}" custom-style="{{ { backgroundColor: '#34BE79'} }}">
+</ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}px"></view>
+
+<view class="dealOrder">
+	<view class="question-images" wx:if="{{images.length>0}}" >
+	  <block wx:for="{{images}}" wx:key="*this" >
+	    <view class="q-image-wrap">
+	      <!-- 图片缩略图  -->
+	      <image class="q-image" src="{{item}}" mode="aspectFill" data-idx="{{index}}" bindtap="handleImagePreview"></image>
+	    </view>
+	  </block>
+	  
+	</view>
+	<view class="question-images" wx:else >
+		<view class="q-image-wrap">
+		  	<!-- 图片缩略图  -->
+			<image class="q-image" src="/images/add.png" mode="aspectFill" bindtap="chooseImage"></image>
+		</view>
+		
+	</view>
+	<button size="mini" class="submitButton" bindtap="submitOrder">提交</button>
+</view>

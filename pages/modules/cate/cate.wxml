@@ -1,0 +1,155 @@
+<!--pages/modules/cate/cate.wxml-->
+<!--头部-->
+<import src="../../component/components.wxml" />
+<import src="../../component/module/module.wxml" />
+
+
+<!--搜索框-->
+<view class="sticky-in-relative-container" style="position: fixed; top: 0;width: 100%;z-index:2">
+   <template is="search-bar-ljfl" data="{{params: { placeholder: '搜索' } }}"></template> 
+</view>
+
+<ui-popup show="{{ show }}" position="" background="transparent" >
+        <view class=" {{ showContent == 'voice'?'popupContent':'popupVoice' }}"  >
+            <view wx:if="{{ showContent == 'voice'}}" animation="true">
+              <view class="voiceTitle">
+                请问您想查询什么？
+              </view>
+              <view class="show-search-box" >
+                <view hover-class="ui-btn-hover"  class="search-list" bindtap="searchGarbage" data-content="包装纸">
+                    包装纸
+                </view>
+                <view hover-class="ui-btn-hover"  class="search-list" bindtap="searchGarbage" data-content="塑料">
+                    塑料
+                </view>
+                <view hover-class="ui-btn-hover"  class="search-list" bindtap="searchGarbage" data-content="湿巾纸">
+                    湿巾纸
+                </view>
+                <view hover-class="ui-btn-hover"  class="search-list" bindtap="searchGarbage" data-content="瓜子壳">
+                    瓜子壳
+                </view>
+              </view>
+              <view class="voice-tabbar">
+                <view class="close-popup-voice" bindtap="closePopup">
+                 <span type="x" size="25" color="#FC8950" class="ui-icon icon-x" style="color: #34BE79; font-size: 60rpx;"></span>
+                </view>
+                <view hover-class="press" class="tabbarContent" catchtouchstart='startRecord' catchtouchend='stopRecord'>按住 说话</view>
+              </view>
+            </view>
+            <view wx:elif="{{ showContent == 'content' }}" >
+                <view class="close-popup" bindtap="closePopup">
+                    <span type="x" size="18" color="#FC8950" class="ui-icon icon-x" style="color: #3296e6; font-size: 18px;"></span>
+                </view>
+                <view class="iconDetails">
+                  <image src="{{currentChecked.pic_url}}"></image>
+                </view>
+                <view class="details">
+                  <text class="title1">
+                    {{currentChecked.title}}
+                  </text>
+                  <text class="content1">
+                    {{currentChecked.dsec}}
+                  </text>
+                  <text class="title2">
+                    投放要求
+                  </text>
+                  <text class="content2" wx:for="{{currentChecked.require}}">
+                    {{item}};
+                  </text>
+                </view>
+            </view>
+        </view>
+    </ui-popup>
+
+
+
+
+<!--左侧一级类列表-->
+<view class="ui-row" style="margin-top: 58px;background:#f0f0f0">
+    <view class="menu-list ui-col ui-col-3" style="width: 25%; z-index: 1;">
+        <ui-v-tabs 
+            height="{{height}}"
+            tab-style="{{tabStyle}}"
+            active-tab-style="{{activeTabStyle}}"
+            class="tab-item"
+            index="{{ current }}"
+            data-key = "current"
+            bindchange="handleChange">
+            <ui-v-tab wx:for="{{ Cates }}" wx:key="type">
+                {{ item.chinese }}
+            </ui-v-tab>
+        </ui-v-tabs>
+    </view>
+    
+    <!--占位-->
+    <view class="ui-col ui-col-3" style="flex: 0 0 25%;"></view>
+    
+        <view class="ui-col" style="flex: 0 0 75%;">
+        <view wx:if="{{ childcates }}">
+            <view class="ui-col-content">
+                <scroll-view scroll-y>
+                        <view class="ui-card-box">
+                            <view class="ui-card" style="border-radius: 10px;background: {{ childcates.background }};">
+                                <view class="ui-card-content">
+                                    <view class="ui-row">
+                                        <image src="{{ childcates.imageUrl }}" class="cate-lajitong1"/>
+                                    </view>
+
+                                    <!--可回收物-->
+                                    <view class="ui-row">
+                                        <view class="cate-content">
+                                            <text class="cate-content-one"> {{childcates.categoryName}}</text>
+                                            <text >{{childcates.categoryMess}}</text>
+                                        </view>
+                                    </view>
+
+                                    <!--投放要求-->
+                                    <view wx:if="{{childcates.yaoqiu.length > 0}}">
+                                        <view  class="ui-row ui-row-yaoqiu"> 投放要求:</view>
+                                        <view >
+                                            <view wx:for="{{childcates.yaoqiu}}" class="cate-yaoqiu" wx:for-item="tabyaoqiuItem" wx:key="type">
+                                                <view class="ui-row ">
+                                                    <view class="ui-col yaoqiu-yuan">
+                                                        <image src="../../../images/cate/yuan.png" class="yuan" />
+                                                    </view>
+                                                    <view class="ui-col yaoqiu-text">
+                                                        <text>{{tabyaoqiuItem.text}}</text>
+                                                    </view>
+                                                    
+                                                </view>
+                                            </view>
+                                        </view>          
+                                    </view>
+
+                                </view>
+                            </view>
+                        </view>
+                    
+                        <!--底部列表-->
+                        <view wx:if="{{ childlist[current].length > 0 }}">
+                            <view class="cate-list">
+                                <view wx:for="{{ childlist }}" wx:for-item="catelistItem" wx:key="key">
+                                    <view class="ui-col-content ui-row-top" wx:for="{{ catelistItem }}" wx:key="id"   wx:for-item="item">
+                                        <view class="catelistItem-name" >
+                                            <text>{{item.name}}</text>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+
+                            <!--回到顶部-->
+                            <template is="scroll-top" wx:if="{{ isSticky }}"></template>
+                        </view>
+                        <view wx:else>
+                            <mp-loading type="circle"></mp-loading>
+                        </view>
+                </scroll-view>
+            </view>    
+        </view>
+    </view>
+            
+</view>
+
+
+   
+  

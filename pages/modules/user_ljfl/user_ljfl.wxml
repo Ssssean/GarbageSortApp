@@ -1,0 +1,89 @@
+<!--pages/modules/user_ljfl/user_ljfl.wxml-->
+<ui-fix-nav-bar slot="nav-bar" title="我的" custom-style="{{ { backgroundColor: '#34be79'} }}"></ui-fix-nav-bar>
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<!--<i-card i-class="user-portrait" none-header="true" none-footer="true" >
+    <view slot="content">
+        <open-data class="user-avatar" type="userAvatarUrl"></open-data>
+        <view class="user-box">
+            <view wx:if="{{ userName }}" class="user-nickname">{{ userName }}</view>
+            <open-data wx:else class="user-nickname" type="userNickName"></open-data>
+            
+        </view>
+    </view>
+</i-card>-->
+
+    <view class="ui-card card-username" style="">
+        <view style="padding:20px;">
+            <open-data class="user-avatar" type="userAvatarUrl"></open-data>
+            <view class="user-box">
+                <view wx:if="{{ userName }}" class="user-nickname">{{ userName }}</view>
+                <open-data wx:else class="user-nickname" type="userNickName"></open-data>  
+            </view>
+        </view>     
+    </view>
+      
+
+
+<view class="ui-card-box">
+    <view class="ui-card" style="height:100%;border-radius:40rpx;">
+        <view class="ui-card-content" style="margin:5px auto;">
+            <view class="ui-row">
+                <view class="ui-col-6 col-myorder" bindtap="LookAllorder">
+                    <i-icon type="activity" size="25"  color="#00a161"/>
+                    <text>{{ usertype == 'u' ? '我的订单':'客户订单' }}</text>
+                </view>
+                <view class="ui-col col-lookallorder" bindtap="LookAllorder" >
+                    <text class="text-lookallorder">查看全部</text>
+                    <i-icon type="arrow-down" size="14" color="#27323f" class="ui-icon icon-arrow-right"  ></i-icon>    
+                </view> 
+                
+            </view>
+
+            <view class="xian"></view>
+
+
+           <view>
+                <view class="ui-row"> 
+                    <view wx:for="{{myorderStatus}}"   wx:key="status" wx:for-item="orderStatusitem" class="ui-col ui-col-orderStatus" bindtap="GoOrderStatus" data-status="{{ orderStatusitem.status }}"> 
+                        <i-icon type="{{orderStatusitem.type}}" size="35" color="#00a161" />                  
+                    </view>
+                </view>
+
+                <view class="ui-row"> 
+                    <view wx:for="{{myorderStatus}}" wx:key="status" wx:for-item="orderStatusitem" class="ui-col ui-col-orderStatus" bindtap="GoOrderStatus" data-status="{{ orderStatusitem.status }}"> 
+                        <text class="order-status-text">{{orderStatusitem.content}}</text>                  
+                    </view>
+                </view>  
+           </view>  
+
+         </view>
+    </view>
+</view>
+
+
+<view if="{{userorder_data.length > 0}}">
+    <view wx:for="{{userorder_data}}" wx:for-item="userorder" class="ui-card-box">
+        <view class="ui-card">
+            <view class="ui-card-content">
+                <view class="ui-row" bindtap="{{userorder.bindtap}}">
+                    <view class="ui-col">
+                        <view class="ui-col-image">
+                            <i-icon type="{{userorder.icontype}}"  size="25 " color="{{userorder.iconcolor}}"/>
+                        </view>
+                        <view class="ui-col-my">
+                            {{userorder.text}}
+                        </view>
+                    </view>
+
+                    <view wx:if="{{userorder.isGo}}">
+                        <span type="arrow-down" size="14" color="#27323f" class="ui-icon icon-arrow-right" style="margin-right: 50rpx;" ></span>
+                    </view>
+                    
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+

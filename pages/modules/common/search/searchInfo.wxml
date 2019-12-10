@@ -1,0 +1,57 @@
+<import src="../../../component/components.wxml" />
+<import src="../../../component/module/module.wxml" />
+
+<ui-nav-bar slot="nav-bar" custom-style="{{ { borderBottom: 'none', backgroundColor: '#fff', fontSize: '16px' } }}">
+    <view class="ui-row">
+        <view class="ui-col ui-col-content">
+            <view class="ui-col">
+                <ui-navigate-back id="comNavigateBack" style="flex:0 0 60px;font-weight: 300;color: #27323f;font-size: 14px;"></ui-navigate-back>
+                <view class="ui-col ui-col-align-center align-center valign-middle ui-header-title">
+                    <view class="ui-col-content align-center valign-middle">
+                        <view bindtap="onBack">
+                            <i-icon type="search" size="22" wx:if="{{ showTitleIcon }}"/> {{ title }}
+                        </view>
+                    </view>
+                </view>
+                <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 60px;">
+                    <view class="ui-col-content align-center valign-middle"></view>
+                </view>
+            </view>
+            <template is="search-bar" data="{{  params: { isHotSearch: true, from: 'searchInfo', placeholder: '搜索商标/专利/版权/认证..', style: 'padding: 20px 0;' } }}"></template>  
+        </view>
+    </view>
+</ui-nav-bar>
+
+<view style="height: {{ NAV_HEIGHT + 58 }}px"></view>
+<!--<view>
+    <view class="condition-container" id="suggestion-title">
+        <ui-sticky scroll-top="{{ scrollTop }}" top="{{ NAV_HEIGHT }}" custom-style="{{ customStyle }}"class="header sticky-header" stick-on-tap="stick-on-tap" style="">
+            <template is="order-sticky-menu2" data="{{ navList, orderTagsStyle }}"></template>
+            <template is="search-bar" data="{{  params: { isHotSearch: true, from: 'searchInfo', placeholder: '搜索商标/专利/版权/认证..', style: 'padding: 20rpx 0;' } }}"></template>
+            <view slot="sticky">
+                <template is="order-sticky-menu2" data="{{ navList, orderTagsStyle }}"></template>
+            </view>
+        </ui-sticky>
+    </view>
+</view>-->
+
+<template is="product-list-plus" data="{{ shops_plus, class_imgtype, class_type, domain }}"></template>
+
+<!--<ui-popup bindhide="onPopupHidden" cropout show="{{ pop_0 }}" position="top" top="{{ popup_NAV_HEIGHT }}" height="{{ popupHeight }}" mask-style="{{ { top: popup_NAV_HEIGHT +'px' } }}">
+    <view class="ui-top-pop">
+        <scroll-view scroll-y="scroll-y">
+            <ui-check-list max="1" label-position="left" options="{{ shopType }}" type="plain" value="{{ shop_type }}" bindchange="onOrderTypeChange"></ui-check-list>
+        </scroll-view>
+    </view>
+</ui-popup>
+
+<ui-popup bindhide="onPopupHidden" cropout show="{{ pop_1 }}" position="top" top="{{ popup_NAV_HEIGHT }}" height="{{ popupHeight }}" mask-style="{{ { top: popup_NAV_HEIGHT +'px' } }}">
+    <view class="ui-top-pop">
+        <scroll-view scroll-y="scroll-y">
+            <ui-check-list max="1" label-position="left" options="{{ sortType }}" type="plain" value="{{ sort_type }}" bindchange="onOrderTypeChange"></ui-check-list>
+        </scroll-view>
+    </view>
+</ui-popup>
+-->
+
+<template is="scroll-top" wx:if="{{ isSticky }}"></template>

@@ -1,0 +1,21 @@
+{
+    "usingComponents": {
+        "i-cell": "/packages/iview-weapp/cell/index",
+        "i-icon": "/packages/iview-weapp/icon/index",
+        "i-toast": "/packages/iview-weapp/toast/index",
+        "i-modal": "/packages/iview-weapp/modal/index",
+        "i-message": "/packages/iview-weapp/message/index",
+        "i-collapse": "/packages/iview-weapp/collapse/index",
+        "i-input-number": "/packages/iview-weapp/input-number/index",
+        "i-card": "/packages/iview-weapp/card/index",
+        "i-radio": "/packages/iview-weapp/radio/index",
+        "i-checkbox": "/packages/iview-weapp/checkbox/index",
+        "i-swipeout": "/packages/iview-weapp/swipeout/index",
+        "i-input": "/packages/iview-weapp/input/index",
+        "i-radio-group": "/packages/iview-weapp/radio-group/index",
+        "i-collapse-item": "/packages/iview-weapp/collapse-item/index",
+        "ui-divider": "/packages/touchui-wx-components/ui-divider/dist/index",
+        "ui-fix-nav-bar": "/packages/touchui-wx-components/ui-fix-nav-bar/dist/index",
+        "ui-fixed-view": "/packages/touchui-wx-components/ui-fixed-view/dist/index"
+    }
+}

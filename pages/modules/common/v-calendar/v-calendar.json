@@ -1,0 +1,7 @@
+{
+    "usingComponents": {
+        "ui-nav-bar": "/packages/touchui-wx-components/ui-nav-bar/dist/index",
+        "ui-v-calendar": "/packages/touchui-wx-components/ui-v-calendar/dist/index",
+        "ui-navigate-back": "/packages/touchui-wx-components/ui-navigate-back/dist/index"
+    }
+}

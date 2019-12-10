@@ -1,0 +1,954 @@
+<wxs module="loadData">
+  module.exports = {
+    image: function(url, domain = "") {
+      if(url == null) return "about:blank";
+      else if(url.match('^/images')) {
+        return url;
+      } else {
+        return domain + url;
+      }
+    },
+    diffValue: function(v1, v2) {
+      if(isNaN(v1)) {
+        v1 = v1.replace(",", "");
+      }
+      if(isNaN(v2)) {
+        v2 = v2.replace(",", "");
+      }
+      return parseInt(v1) - parseInt(v2);
+    },
+    formatPrice: function(v1) {
+      if(isNaN(v1)) {
+        v1 = v1.replace(".00", "");
+      }
+      return v1;
+    }
+  };
+</wxs>
+<!--产品列表-->
+<template name="product-list">
+  <view wx:if="{{ shops.length > 0 }}" class="goods-box">
+      <view class="goods-list" bindtap="enterShopPage" hover-class="ui-btn-hover" data-id="{{ item.id }}" data-text="{{ item.name }}" data-is-popup="{{item.is_popup || ''}}"  wx:for="{{ shops }}" wx:key="key" wx:for-index="key" wx:for-item="item">
+          <view class="goods-content {{ item.is_popup == 1 ? 'goods-content2' : '' }} {{ item.price && item.oprice > item.price ? 'goods-reduce' : '' }}">
+
+              <view class="icon" wx:if="{{ item.pic_url }}">
+                  <image src="{{ loadData.image(item.pic_url, domain) }}" lazy-load="true" binderror="goodsPicLoadError" data-src="{{ class_imgtype[class_type] }}.png"  data-error="shops[{{key}}].pic_url"/>
+              </view>
+              
+              <view class="icon" wx:elif="{{ class_imgtype[class_type] }}">
+                  <image src="/images/home/{{ class_imgtype[class_type] }}.png" lazy-load="true"/>
+              </view>
+
+              <view class="small-title">{{item.name}}</view>
+              <view class="price">
+                  <text wx:if="{{ item.price }}">￥{{item.price}}</text>
+                  <text wx:if="{{ item.price && item.oprice > item.price }}" class="oprice">￥{{item.oprice}}</text>
+              </view>
+          </view>
+      </view>
+  </view>
+  <view wx:else class="title-box">
+      <image class="box-none" lazy-load="true" src="/images/none/empty_goods.png" />
+      <text>暂无内容</text>
+  </view>
+</template>
+
+
+<!--产品列表2-->
+<template name="cate-list">
+  <view wx:if="true" class="shops-box">
+      <view class="parent_img_text">
+          <view class="shops-content" >
+              <text>{{shops.content}}</text>
+          </view>
+          <view class="shops-image">
+              <image src="{{shops.img_url}}"/>
+          </view>
+      </view> 
+      <view class="cate-item">
+          <view wx:for="{{shops.cateitem}}" >
+              <view class="item-name {{item.id % 2 ? 'item-name-color' : ''}}" >
+                  <text>{{item.name}}</text>
+              </view>
+          </view>
+      </view>
+      
+      
+  </view>
+  <view wx:else class="title-box">
+      <image class="box-none" lazy-load="true" src="/images/none/empty_goods.png" />
+      <text>暂无内容</text>
+  </view>
+</template>
+
+
+
+<template name="product-list-plus">
+  <view wx:if="{{ shops_plus.length > 0 }}">
+    <view class="order-list" wx:for="{{ shops_plus }}" wx:key="_key"  wx:for-index="_key" wx:for-item="shops">
+      <template is="product-list" data="{{ shops, class_imgtype, domain, class_type }}"></template>
+	  <view style="width: 95%; margin: 0 auto">
+		  <ui-divider padding="20"> • </ui-divider>
+	  </view>
+    </view>
+  </view>
+  <view wx:else class="title-box">
+      <image class="box-none" lazy-load="true" src="/images/none/empty_goods.png" />
+      <text>暂无内容</text>
+  </view>
+</template>
+
+<!--子产品列表-->
+<template name="product-children-list">
+  <ui-popup show="{{ isChildrenShops }}" height="270" background="transparent">
+      <view class="childrenShops">
+          
+          <view class="ui-row ui-row-border-bottom" style="height:40px;">
+              <view class="ui-col valign-middle" style="padding-left: 10px;">
+                  <view class="ui-col-content valign-middle">
+                      <text class="title"> 选择 <text style="color: #3296e6">{{ childrenShopTitle }}</text> 产品 </text>
+                  </view>
+              </view>
+              <view bindtap="closeChildrenShops" class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 40px;">
+                  <view class="ui-col-content align-center valign-middle">
+                      <span type="x" size="18" color="#FC8950" class="ui-icon icon-x" style="color: #27323f; font-size: 18px;"></span>
+                  </view>
+              </view>
+          </view>
+
+
+          <view class="ui-col-content">
+              <scroll-view scroll-with-animation scroll-y="true">
+                  <view class="goods-box" style="height: 200px;">
+                      <view class="goods-list" hover-class="ui-btn-hover"  bindtap="enterShopPage" data-id="{{ item.id }}" wx:for="{{ childrenShops }}" wx:key="key" wx:for-index="key" wx:for-item="item">
+                          <view class="goods-content {{ item.price && item.oprice > item.price ? 'goods-reduce' : '' }}">
+
+                              <view class="icon" wx:if="{{ item.pic_url }}">
+                                  <image src="{{ item.pic_url.match('^\/images') ? '' : domain }}{{ item.pic_url }}" lazy-load="true" binderror="goodsPicLoadError" />
+                              </view>
+                              <view class="icon" wx:elif="{{ class_imgtype[class_type] }}">
+                                  <image src="/images/home/{{ class_imgtype[class_type] }}.png" lazy-load="true"/>
+                              </view>
+
+                              <view class="small-title">{{item.name}}</view>
+                              <view class="price">
+                                  <text wx:if="{{ item.price }}">￥{{item.price}}</text>
+                                  <text wx:if="{{ item.price && item.oprice > item.price }}" class="oprice">￥{{item.oprice}}</text>
+                              </view>
+                          </view>
+                      </view>
+                  </view>
+              </scroll-view>
+          </view>
+
+      </view>
+  </ui-popup>
+</template>
+
+
+<!--商品基础信息-->
+<template name="basicInfo">
+  <view class="ui-row basicInfo basic-info-title">
+    <view class="ui-col">
+      <view class="ui-col-content">
+        <!--标题&副标题-->
+        <view class="column-content">
+          <view class="column-goods-title over">{{goodsDetail.name}}</view>
+          <view class="column-goods-risti" wx:if="{{ goodsDetail.sp_ts || goodsDetail.beizhu }}">{{goodsDetail.sp_ts || goodsDetail.beizhu }}</view>
+        </view>
+        <!--原价&新价格-->
+        <view class="column-content column-price-content"  wx:if="{{ goodsDetail.price }}">
+          <view class="column-goods-price">¥{{goodsDetail.price}}</view>
+          <view class="column-goods-original" wx:if="{{goodsDetail.price && goodsDetail.oprice > goodsDetail.price}}">¥{{goodsDetail.oprice}}</view>
+        </view>
+        
+        <view class="ui-row-border-top"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="ui-row basicInfo" wx:if="{{ serviceImages.length > 0 }}">
+    <view class="ui-col">
+      <view class="ui-col-content">
+        
+        <view class="column-content">
+          <view class="column-goods-title over small">申请流程</view>
+        </view>
+
+        <view class="column-content" style="margin-top: 8px;">
+          <view class="image-contianer" style="padding: 0; ">
+              <image src="{{ item }}" mode="widthFix" wx:for="{{serviceImages}}" wx:key="key" wx:for-index="key" wx:for-item="item" bindtap="previewqrTap" data-img="{{item}}" />
+          </view>
+          
+          <view class="ui-row-border-top"></view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="ui-row basicInfo">
+    <view class="ui-col">
+        <view class="ui-col-content">
+            <view class="column-content">
+                <view class="column-goods-title over small">所需文件</view>
+            </view>
+            <view class="column-content">
+                <editor id="__file" data-id="file" data-auto-load="true" class="editor-container" read-only="{{ __fileReadOnly }}" bindready="onEditors"></editor>
+            </view>
+            <view class="ui-row-border-top"></view>
+        </view>
+    </view>
+  </view>
+
+
+  <view class="ui-row basicInfo">
+    <view class="ui-col">
+        <view class="ui-col-content">
+            <view class="column-content">
+                <view class="column-goods-title over small">申请指南</view>
+            </view>
+            <view class="column-content" style="margin-top: 8px;">
+                <editor id="__apply" data-id="apply" data-auto-load="true" class="editor-container" read-only="{{ __applyReadOnly }}" bindready="onEditors"></editor>
+                <view class="ui-placeholder"></view>
+            </view>
+        </view>
+    </view>
+  </view>     
+
+</template>
+
+<!--空购物车-->
+<template name="no-goods">
+  <view class="title-box" bindtap="{{ run ? run : '' }}">
+    <image class="box-none" lazy-load="true" src="/images/none/cart_empty.png" />
+    <text>购物车空空的</text>
+    <button class="ui-button" style="margin-top: 15px; width: 200rpx;" bindtap="goBug">去购买</button>
+  </view>
+</template>
+
+
+<!--订单列表-->
+<template name="order-list">
+  <!-- <view class="search-line"></view> -->
+  <view class="order-list" wx:for="{{ orders }}" wx:key="_key"  wx:for-index="_key" wx:for-item="order" style="opacity: {{ orderBuffer }}">
+      
+      <view class="ui-col-content ui-row-border-top" wx:for="{{ order }}" wx:key="key"  wx:for-index="key" wx:for-item="item" bindtap="enterDetail" data-item="{{ item }}">
+          
+          <view class="ui-row"> 
+            <view class="ui-col ui-col-height-auto valign-middle align-middle" style="padding-left: 5px;">          
+              <i-icon type="label" size="18" color="#616161" />
+              <text class="ui-content-title"> {{ item.yw_type }}</text>
+            </view>
+            <view class="ui-col ui-col-height-auto valign-middle align-right ui-cart" style="flex: 0 0 40%">
+              <!--<i-tag type="border" class="i-tags" color="blue" checked="true" checkable="true">{{ item.status }}</i-tag>-->
+              <text style="color: #3295e6"> {{ item.status }} </text>
+            </view>
+          </view>
+
+          <view class="ui-row" style="margin-top: 25rpx;">
+            <view class="ui-col ui-col-height-auto i-swipeout-image valign-middle align-center" style="flex: 0 0 65px;">
+              <image src="{{ loadData.image(item.pic_url, domain) }}" lazy-load="true" binderror="onPicLoadError" data-src="{{ 'patent' }}.png"  data-error="orders[{{_key}}][{{key}}].pic_url"/>
+            </view>
+            <view class="ui-col ui-col-height-auto" style="flex: 0 0 165px; margin-left: 10px;">
+              <view class="ui-col-content">
+                <view class="ui-title"> {{ item.anjianming || item.contract_id }} </view>
+                <view class="ui-title ui-small-title" wx:if="{{ item.shenqingren }}"> {{ item.shenqingren }} </view>
+                <view class="ui-datetime">{{ item.create_time }}</view>
+              </view>
+            </view>
+
+            <view class="ui-col ui-col-height-auto valign-middle align-right ui-cart">
+              <!--<i-button shape="circle" type="blue" size="mini" i-class="order-button" bindtap="enterDetail" data-item="{{ item }}">
+                  订单详情
+              </i-button>-->
+              <view>
+                <text class="ui-price-symbol">￥</text>
+                <text class="ui-price">{{ item.price[0] }}</text>
+                <text class="ui-price-decimal">.{{ item.price[1] }}</text>
+              </view>
+            </view>
+          </view>  
+          
+      </view> 
+
+  </view>
+</template>
+
+<!--购物车列表-->
+<template name="cart-goods-list">
+  <scroll-view scroll-y>
+    <view wx:for="{{list}}" wx:key="key"  wx:for-index="key" wx:for-item="item">
+      <i-swipeout operateWidth="{{ item.is_xiaoxiang == 1 ? 140 : 70  }}" disabled="{{ readOnly }}" i-swipeout-item-class="{{ readOnly ? 'ui-swipeout-item' : '' }}"  i-class="{{ key == list.length - 1 ? 'ui-last-swipeout' : '' }}">
+          <view slot="content">
+              <view class="ui-row" style="/*height: 122px;*/padding: 10px 0;min-height: 100px;">
+                
+                <view wx:if="{{ !readOnly }}" class="ui-col ui-col-height-auto valign-middle" style="flex: 0 0 50px;">
+                  <i-checkbox data-key="{{ key }}" data-item-obj="{{item}}" data-item="cartGoodsList[{{key}}]" checked="{{ item.checked }}" data-ck_cart_id="{{ item.checkbox }}" data-ck_xx_num = "{{ item.xiaoxiang_num }}"  data-ck_sb_num="{{ item.commodity_num }}" bindchange="selectCart"></i-checkbox>
+                </view>
+
+                <view class="ui-col ui-col-height-auto valign-middle i-swipeout-image" style="flex: 0 0 65px;">
+                  <image src="{{ loadData.image(item.pic_url, domain) }}" lazy-load="true" binderror="goodsPicLoadError" data-src="{{ 'patent' }}.png"  data-error="cartGoodsList[{{key}}].pic_url"/>
+                </view>
+
+                <view class="ui-col ui-col-height-auto" style="/*flex: 0 0 {{ readOnly ? '165' : '130' }}px;*/margin-left: 15px;">
+                  <view class="ui-col-content" style="/*margin-top: 15px;*/">
+                    
+                    <view class="i-swipeout-title"> {{ item.pic_name }} </view>
+
+                    <view class="i-swipeout-price" wx:if="{{ item.is_jiage == 0 }}">
+                      费用：<view class="column-goods-price i-swipeout-price" style="{{  item.yh_price > 0  ? 'text-decoration: line-through;' : ''}}">¥ {{ item.feiyong }}</view>
+                    </view>
+
+                    <view class="i-swipeout-price" wx:if="{{  item.yh_price > 0 }}">
+                      限时优惠：<view class="column-goods-price i-swipeout-price-discount">¥ -{{ item.yh_price }}</view>
+                    </view>
+
+                    <view class="i-swipeout-price" wx:if="{{ item.is_jiage == 1 }}">
+                      官方费：<view class="column-goods-price i-swipeout-price">¥ {{ item.guan_price }}</view>
+                    </view>
+
+                    <view class="i-swipeout-price" wx:if="{{ item.is_jiage == 1 }}">
+                      服务费：<view class="column-goods-price i-swipeout-price">¥ {{ item.server_price }}</view>
+                    </view>
+
+                    <view class="i-swipeout-price" wx:if="{{item.is_xiaoxiang == 1}}">
+                      小项费：<view class="column-goods-price i-swipeout-price">¥ {{ item.xiaoxiang_price }}</view>
+                    </view>
+
+                    <view class="i-swipeout-price">
+                      其它费：<view class="column-goods-price i-swipeout-price">¥ {{ item.ext_price }}</view>
+                    </view>
+
+                  </view>
+                </view>
+
+                <view class="ui-col ui-col-height-auto valign-middle align-center ui-cart">
+                  
+                  <view wx:if="{{readOnly == false && item.is_xunjia == 0}}" class="ui-col-content valign-middle align-center">
+                    <view class="i-swipeout-price">
+                      小计：<view class="ui-col-align-right column-goods-price">¥ {{ item.all_price }}</view>
+                    </view>
+                    <i-input-number bindchange="changeCartBuyNumber" data-key="{{ key }}" data-item-obj="{{item}}" data-ck_cart_id="{{ item.checkbox }}" data-ck_xx_num="{{ item.xiaoxiang_num }}"  data-item="cartGoodsList[{{key}}]" value="{{item.commodity_num}}"  min="1" max="99" i-class="mini-number" mini-input-number-text-class="mini-input-text" mini-input-number-minus-class="mini-input-minus" mini-input-number-plus-class="mini-input-plus"  />
+                  </view>
+                  
+                  <button wx:if="{{ readOnly == false && item.is_xunjia == 1 }}" class="ui-col-content valign-middle align-center" hover-class="ui-btn-hover" open-type="contact" session-from="weapp" plain="true" send-message-title="联系客服">
+                    <i-icon type="customerservice" size="28" color="#80848f" /> 
+                    <view style="margin-top: -10px;">询价</view>
+                  </button>
+
+                  <view wx:if="{{readOnly}}" class="ui-col-content valign-middle align-right">
+                    <view class="i-swipeout-price">
+                      <!-- 小计 = (优惠后商品单价 + 小项单价) * 商品数量 ；小项单价 = 小项 > 10 每个增加40 -->
+                      小计：<view class="ui-col-align-right column-goods-price">¥ {{ item.all_price }}</view>
+                      <view class="ui-col-align-right">
+                        x {{item.commodity_num}}
+                      </view>
+                    </view>
+                  </view>
+
+                </view>
+
+              </view>
+          </view>
+          <view wx:if="{{ !readOnly }}" slot="button" style="height: 100%;">
+              <view class="i-swipeout-button" wx:if="{{ item.is_xiaoxiang == 1 }}" data-key="{{ key }}" data-item="cartGoodsList[{{key}}]" data-id="{{item.checkbox}}" data-commodity_num="{{ item.commodity_num }}" data-xiaoxiang_num="{{ item.xiaoxiang_num }}" data-xiaoxiang_price="{{ item.xiaoxiang_price }}" bindtap="setSmallItem" style="background-color: #EB4B2B">小项数量</view>
+              <view class="i-swipeout-button" data-id="{{item.checkbox}}" bindtap="canDelete">删除</view>
+          </view>
+      </i-swipeout>
+      
+      <view class="search-line" wx:if="{{ readOnly == false && key != list.length - 1 }}"></view>
+
+    </view>
+    <view wx:if="{{ !readOnly }}" class="ui-placeholder"></view>
+  </scroll-view>
+
+</template>
+
+<template name="cart-goods-prices">
+  <!--底部栏-->
+  <ui-fixed-view bottom="0" left="0" right="0">
+    <view class="fixed_bottom ui-row" style="height:50px;">
+      
+      <view class="ui-col ui-col-align-center align-center valign-middle" style="flex:0 0 85px;">
+          <view class="ui-col-content align-center valign-middle">
+              <view class="fixed_bottom_box">
+                <i-checkbox i-title-class="ui-all-select" value="全选" checked="{{ allSelect }}" bindchange="allSelectCart"></i-checkbox>
+              </view>
+          </view>
+      </view>
+
+      <view class="ui-col valign-middle" style="flex:0 0 50%; padding-right: 10px;">
+          <view class="ui-col-content valign-middle" style="opacity: {{ editMode ? 0 : 1 }};">
+              <view class="i-swipeout-price ui-col-align-right"> 
+				<text style="color: #111; font-weight: 300;">合计：</text> <text class="column-goods-price i-swipeout-price"> ¥ {{ total_price }}</text>
+			  </view>
+              <view class="cart-all-price ui-col-align-right"> 总额 ¥{{total_yuan_price}}.00  优惠 ¥{{ loadData.diffValue(total_yuan_price, total_price) }}.00</view>
+          </view>
+      </view>
+        
+      <view hover-class="ui-btn-hover" class="ui-col valign-middle" >
+          <view class="ui-col-content valign-middle">
+              <view class="form_list_buy {{ editMode ? 'form_list_delete' : '' }}" style="padding-left: 10px;"> 
+				<view wx:if="{{ editMode }}" bindtap="canDelete" data-all-delete="true">
+					批量删除
+				</view>
+				<view wx:else bindtap="confirmOrder">
+					去结算 <text wx:if="{{ total_num > 0 }}">（{{total_num}}件）</text>
+				</view>
+			  </view>
+          </view>
+      </view>
+
+    </view>
+  </ui-fixed-view>
+</template>
+
+<template name="confirm-order-goods">
+  <view class="ui-card-box">
+      <i-card none-header="true" none-footer="true">
+          <view slot="content">
+              <i-collapse name="goods" >
+                  <i-collapse-item name="goods" title="产品信息：" i-class="ui-collapse-item" i-collapse-item-arrow="ui-collapse-item-arrow"  i-title-wrap-class="ui-title-wrap"  i-class-title="ui-collapse-item-title"  i-class-content="ui-collapse-item-content">
+                      <view slot="content">
+                          <template is="cart-goods-list" data="{{ list: goods, domain: domain, readOnly: true }}"></template>
+                      </view>
+                  </i-collapse-item>
+              </i-collapse>
+          </view>
+      </i-card>
+  </view>
+</template>
+
+<template name="confirm-order-invoice">
+  <view class="ui-card-box">
+      <view class="ui-card">
+        <view class="ui-cart-title ui-collapse-item-title">
+          <view class="ui-row-border-bottom">发票信息：</view>
+        </view>
+        <!-- 应付金额 * 0.06 + 应付金额  -->
+        <view class="content" style="margin-left: 5px;">
+          <i-radio-group current="{{ invoiceChecked }}" bindchange="changeInvoice" >
+            <i-radio i-class="invoice-item" value="{{ item.name }}" wx:for="{{ invoice }}" wx:key="{{ item.id }}"  wx:for-index="{{ item.id }}" wx:for-item="item"  data-id="{{ item.id }}"></i-radio>
+          </i-radio-group>
+          
+          <view class="ui-col-content" wx:if="{{ defaultChecked != invoiceChecked }}">
+            <i-input value="{{ taitou }}" title="发票抬头：" placeholder="请输入发票抬头" />
+          </view>
+
+        </view>
+        <view class="footer">
+          <i-icon type="prompt"  size="18" /> 国内商标注册业务，开发票需要增加{{ tax_vrate }}的税点
+        </view>
+      </view>
+  </view>
+</template>
+
+<template name="confirm-order-money">
+  <view class="ui-card-box">
+      <i-card none-header="true" none-footer="true">
+          <view slot="content">
+              <view class="ui-collapse-item-title ui-row-list ui-pay">
+                  应付金额：
+                  <view class="ui-float-right column-goods-price">
+                    ¥ {{ total_final_price }}
+                  </view>
+              </view>
+
+              <view class="ui-row-list ui-row-border-top"  style="padding: 15px 0;">
+                  <view>
+                      商品总额：
+                      <view class="ui-float-right ui-small">
+                        ¥ {{ total_yuan_price }}
+                      </view>
+                  </view>
+
+                  <view>
+                      优惠金额：
+                      <view class="ui-float-right ui-small">
+                          ¥ {{ total_yh_price != "0.00" ? "- " + total_yh_price : "0.00" }}
+                      </view>
+                  </view>
+
+                  <view>
+                      快递费：
+                      <view class="ui-float-right ui-small">
+                          ¥ {{ kdPrice != "0.00" ? "+ " + kdPrice : "0.00" }}
+                      </view>
+                  </view>
+
+              </view>
+
+          </view>
+      </i-card>
+
+
+      <ui-fixed-view bottom="0" left="0" right="0">
+        <view class="fixed_bottom ui-row" style="height:50px;">
+
+         <view wx:if="{{ total_num > 2 }}" class="ui-col valign-middle">
+            <view style="margin-left: 15px;">应付金额：</view>
+            <view class="column-goods-price" style="font-weight: 300;">
+                <text class="ui-small">¥</text> {{ total_final_price }}
+            </view>
+         </view> 
+
+          <view hover-class="ui-btn-hover" class="ui-col valign-middle" style="{{ total_num > 2 ? 'flex:0 0 150px;': '' }}">
+              <view class="ui-col-content valign-middle">
+                  <view class="form_list_buy" bindtap="beforePay">付款</view>
+              </view>
+          </view>
+
+        </view>
+      </ui-fixed-view>
+
+  </view>    
+</template>
+
+<template name="client_pay_navbar_0">
+  <view over-class="ui-btn-hover" class="ui-col valign-middle">
+      <view class="ui-col-content valign-middle">
+          <view class="form_list_cart">您无权购买，请联系客服。</view>
+      </view>
+  </view>
+</template>
+
+<template name="client_pay_navbar_1">
+  <!--加入购物车-->
+  <view over-class="ui-btn-hover" class="ui-col valign-middle" style="flex:0 0 35%;">
+      <view class="ui-col-content valign-middle">
+          <view class="form_list_cart" bindtap="toAddShopCar">加入购物车</view>
+      </view>
+  </view>
+  <!--立即咨询-->
+  <view hover-class="ui-btn-hover" class="ui-col valign-middle">
+      <view class="ui-col-content valign-middle" wx:if="{{!isAuthLogin}}">
+        <button class="form_list_buy" bindtap="authLogin">授权登录后咨询</button>
+      </view>
+      <view class="ui-col-content valign-middle" wx:else>
+          <button open-type="contact" class="form_list_buy" session-from="weapp">立即咨询</button>
+      </view>
+  </view>
+</template>
+
+
+<template name="client_pay_navbar_2">
+  <!--加入购物车-->
+  <view over-class="ui-btn-hover" class="ui-col valign-middle" style="flex:0 0 35%;">
+      <view class="ui-col-content valign-middle">
+          <view class="form_list_cart" bindtap="toAddShopCar">加入购物车</view>
+      </view>
+  </view>
+
+  <!--立即支付-->
+  <view hover-class="ui-btn-hover" class="ui-col valign-middle" >
+      <view class="ui-col-content valign-middle">
+          <view class="form_list_buy" bindtap="tobuy">立即购买</view>
+      </view>
+  </view>
+</template>
+
+<template name="client_pay_navbar_3">
+  <view hover-class="ui-btn-hover" class="ui-col valign-middle" >
+      <view class="ui-col-content valign-middle" wx:if="{{!isAuthLogin}}">
+        <button class="form_list_buy" bindtap="authLogin">授权登录后咨询</button>
+      </view>
+      <view class="ui-col-content valign-middle" wx:else>
+          <button open-type="contact" class="form_list_buy" session-from="weapp">立即咨询</button>
+      </view>
+  </view>
+</template>
+
+<!--授权后显示-->
+<template name="auth-show">
+  <view class="title-box" bindtap="{{ run ? run : '' }}" style="margin-top: 15%;">
+    <image class="box-none" lazy-load="true" src="/images/none/lock.png" style="margin-bottom: 20px; width: 150rpx; height: 150rpx"/>
+    <button class="ui-button">内容需要授权，点击授权同步</button>
+  </view>
+</template>
+
+<!--空订单-->
+<template name="no-order">
+  <view class="title-box" bindtap="{{ run ? run : '' }}">
+    <image class="box-none" lazy-load="true" src="/images/none/empty_order.png" />
+    <text>没有相关订单</text>
+  </view>
+</template>
+
+<!--订单菜单-->
+<template name="order-sticky-menu">
+  <view>
+      <view class="order-tags">
+          <i-tabs current="{{ orderLabel }}" bindchange="orderTagChange" i-class="ui-order-tags">
+              <i-tab key="{{ item.id }}" title="{{ item.name }}" count="{{ item.count }}"  i-tab-class="ui-order-tag" wx:for="{{ orderTags }}" wx:key="key" wx:for-index="key" wx:for-item="item"></i-tab>
+          </i-tabs>
+      </view>
+      <template is="order-sticky-menu2" data="{{ orderTagsStyle, navList }}"></template>
+  </view>
+</template>
+
+<!--订单菜单2-->
+<template name="order-sticky-menu2">
+  <view class="nav_top ui-row ui-shadow" style="height: {{ orderTagsStyle.height }}">
+      <view wx:if="{{ item.type }}" data-idx="{{ key }}" style="{{ item.style ? item.style : 'flex: 0 0 33.33333333333333%;' }}" class="{{ item.active }} ui-col ui-col-align-center align-center valign-middle" bindtap="openPopup" wx:for="{{ navList }}"  wx:key="key" wx:for-index="key" wx:for-item="item">
+          <view class="ui-col-content align-center valign-middle">
+              <view class="ui-row" style="height: {{ orderTagsStyle.height }}">
+                  <template is="order-{{item.type}}" data="{{ params: item }}"/>
+              </view>
+          </view>    
+      </view>
+  </view>  
+</template>
+
+<template name="order-menu">
+  <view class="ui-col ui-col-align-center align-center valign-middle" style="padding-right: 5px;">
+        <view class="ui-col-content align-center valign-middle">
+            <view wx:if="{{ params.count && params.count == 1 }}" class="nav_top_view">
+              <view>
+                {{ params.name }}
+                <text type="{{ params.icon }}" class="{{ params.active }} ui-icon icon-{{ params.icon }}" style="color: #878787;font-size: 8px;" />
+              </view>
+              <text class="ui-badge-dot"></text>
+            </view>
+            <view wx:elif="{{ params.count && params.count > 1 }}" class="nav_top_view">
+              <view>{{ params.name }}</view>
+              <text class="ui-badge-count">{{ params.count }}</text>
+            </view>
+            <view wx:else>
+              {{ params.name }} <text type="{{ params.icon }}" class="{{ params.active }} ui-icon icon-{{ params.icon }}" style="color: #878787;font-size: 8px;" />
+            </view>
+        </view>
+    </view>
+  <!--<view class="ui-col ui-col-align-right align-right valign-middle" style="padding-right: 5px;">
+      <view class="ui-col-content align-right valign-middle">
+          <view>
+            {{ params.name }} <text type="{{params.icon}}" class="{{ params.active }} ui-icon icon-{{params.icon}}" style="color: #878787;font-size: 8px;" />
+          </view>
+      </view>
+  </view>-->
+  <!--<view class="ui-col ui-col-4 ui-col-align-right align-right valign-middle" style="flex: 0 0 33.33333333333333%; padding-left: 5px;">
+      <view class="ui-col-content align-center valign-middle">
+          <text type="{{params.icon}}" class="{{ params.active }} ui-icon icon-{{params.icon}}" style="color: #878787;;font-size: 8px;" />
+      </view>
+  </view>-->
+</template>
+
+
+<!--<template name="order-date">
+  <view class="ui-col ui-col-align-left align-left valign-middle" style="padding-right: 5px;">
+      <view class="ui-col-content align-right valign-middle">
+          <view>
+            {{ params.name }}
+          </view>
+      </view>
+  </view>
+
+  <view class="ui-col ui-col-4 ui-col-align-left align-left valign-middle" >
+      <view class="ui-date-contianer">
+          <text class="date"></text>
+          <text class="split">至</text> 
+          <text class="date"></text>
+      </view>
+  </view>
+</template>-->
+
+<!--当前步骤数-->
+<template name="order-steps">
+  <view class="ui-steps dashed ui-shadow">
+    <i-steps current="{{ step - 1 }}">
+        <i-step>
+            <view slot="title">购买业务</view>
+        </i-step>
+        
+        <i-step>
+            <view slot="title">填写订单</view>
+        </i-step>
+        
+        <i-step>
+            <view slot="title">平台审核</view>
+        </i-step>
+
+        <i-step>
+            <view slot="title">等待回执</view>
+        </i-step>
+
+        <i-step>
+            <view slot="title">完成</view>
+        </i-step>
+    </i-steps>    
+  </view>
+</template>
+
+<!--订单商品信息块-->
+<template name="order-block-msg">
+  <view class="ui-top-pop ui-shadow" wx:if="{{ data.length > 0 }}">
+      <view class="ui-row">
+          <view class="ui-col ui-title">{{ title }}</view>
+      </view>
+      <view class="ui-row" wx:for="{{ data }}" wx:key="key" wx:for-index="key" wx:for-item="item">
+        <view class="ui-col-3 ui-col-align-left">{{ item.label }}</view>
+        <view class="ui-col-8">{{ item.value }}
+          <i-tag wx:if="{{ item.isCopy }}" i-class="ui-float-right" type="border" class="i-tags" color="blue" checked="true" checkable="true" bindtap="onCopyMsg" data-value="{{ item.value }}">复制</i-tag>
+        </view>
+      </view>
+  </view>
+</template>
+
+<!--订单进度-->
+<template name="order-block-progress">
+  <view class="ui-top-pop ui-shadow" wx:if="{{ data.length > 0 }}">
+    <view class="ui-row">
+        <view class="ui-col ui-title">{{ title }}</view>
+    </view>
+    <view class="ui-steps">
+      <i-steps direction="vertical">
+        <i-step icon="brush" status="process"  wx:for="{{ data }}" wx:key="key" wx:for-index="key" wx:for-item="item">
+          <view slot="title">{{ item.status }}</view>
+          <view slot="content">
+              <view class="ui-row">
+                <view class="ui-col-content">
+                  <view>
+                    <i-icon type="group" size="14" color="#2d8cf0"/> {{ item.phone_name }}
+                    <i-icon type="time" size="14" color="#2d8cf0"/> {{ item.create_time }}
+                  </view>
+                  <view class="progress-content" wx:if="{{ item.content }}">
+                    <i-icon type="brush" size="14" color="#2d8cf0"/> {{ item.content }}
+                  </view>
+                
+                  <template is="order-block-progress-tags" data="{{ label: '新增标签', data: item.biaoqian.add }}"></template>
+                  <template is="order-block-progress-tags" data="{{ label: '删除标签', data: item.biaoqian.remove }}"></template>
+
+                </view>
+              </view>
+          </view>
+        </i-step>  
+      </i-steps>
+    </view>
+  </view>
+</template>
+
+<template name="order-block-progress-tags">
+  <view class="progress-tags" wx:if="{{ data.length >  0 }}">
+    <view class="label">
+      {{ label }}：
+    </view>
+    <view class="ui-tag" style="background-color: #{{ _item.bg_yanse }}; color: #{{ _item.txt_yanse }}" wx:for="{{ data }}" wx:key="_key" wx:for-index="_key" wx:for-item="_item">
+      {{ _item.bq_name }}
+    </view>
+  </view>  
+</template>
+
+<!-- 为你推荐 -->
+<template name="shop-hot-list">
+  <view wx:if="{{ shops.length > 0 }}" class="ui-top-pop" style="background-color: #f6f6f6;">
+    <ui-divider padding="10">
+        <view style="font-weight: 300; color: #333; font-size: 15px;">
+        <!--<text class="ui-icon icon-huo" style="color: #EF3834;"></text>-->
+          <i-icon type="like" color="#EF3834" size="24"/> 为你推荐
+        </view>
+    </ui-divider>
+    <template is="product-list" data="{{ shops, class_imgtype, domain, class_type }}"></template>
+  </view>
+</template>
+
+<!-- 返回顶部 -->
+<template name="scroll-top">
+  <ui-fixed-view bottom="{{ bottom || 50 }}" right="15">
+    <view class="scroll-top-btn" bindtap="onScrollTop" hover-class="ui-btn-hover">
+      <image src="/images/top1.png" />
+    </view>
+  </ui-fixed-view>
+</template>
+
+
+<template name="orderno">
+    <view class="ui-row">
+      <view class="ui-col ui-col-dingdan">
+          <i-icon type="activity" size="25" color="#34be79" class="order-image-dingdan" />
+          <text class="order-dingdanhao">{{item.orderno}}</text>
+      </view>
+      <view class="ui-col ui-col-createtime">
+          <text>{{item.create_time}}</text>
+      </view>
+    </view>
+</template>
+
+<template name="order-status">
+  <view class="ui-row ui-row-people">
+      <view class="ui-col">
+          <i-icon type="mine" size="25" color="#34be79"/>
+          <text>{{order.name}}</text>
+      </view>
+      <view class="ui-col">
+          <i-icon type="lock" size="25" color="#34be79"/>
+          <text>{{order.shopweight}}</text>
+      </view>
+      <view class="ui-col">
+          <i-icon type="time" size="25" color="#34be79"/>
+          <text  style="color:{{ order.status != ClearStatus ? 'pink' : '#808080' }}" data-status="{{ order.status }}">{{ order.status_name }}</text>
+      </view>
+    </view>
+</template>
+
+<template name="order-content">
+  <view class="ui-row-content">
+      <view class="ui-row"> 
+          <view class="ui-col-2">
+              <text class="order-content-left">客户地址</text>
+          </view>
+          <view class="ui-col">
+              <text class="order-text">{{item.district}}{{item.address.home}}</text>
+          </view>
+      </view>
+
+      <view class="ui-row"> 
+          <view class="ui-col-2">
+              <text class="order-content-left">客户电话</text>
+          </view>
+          <view class="ui-col">
+              <text class="order-text">{{item.mobile_phone}}</text>   
+          </view>                      
+      </view>
+
+      <view class="ui-row"> 
+          <view class="ui-col-2">
+              <text class="order-content-left">上门时间</text>
+          </view>
+          <view class="ui-col">
+              <text class="order-text">{{item.homedate}}</text>
+          </view>  
+      </view>
+
+      <view class="ui-row"> 
+          <view class="ui-col-2">
+              <text class="order-content-left">备注信息</text>
+          </view>
+          <view class="ui-col">
+              <text class="order-text">{{item.noteinfo}}</text>
+          </view>
+      </view>
+
+      <view class="ui-row">
+        <block>
+          <image src="https://zhdb.shnfan.com{{item.shopurl}}" lazy-load="true"/>  
+        </block>
+      </view>
+
+  </view>
+</template>
+
+<template name="order-e-picksuccess">
+    <block wx:if="{{ order.status == PickSuccess}}">
+        <view class="xian"></view>
+        <view class="ui-row-content">
+            <view class="ui-row"> 
+                <view class="ui-col-2">
+                    <text class="order-content-left">员工账号</text>
+                </view>
+                <view class="ui-col">
+                    <text class="order-text">1111111111111</text>
+                </view>
+            </view>
+            <view class="ui-row"> 
+                <view class="ui-col-2">
+                    <text class="order-content-left">货物重量</text>
+                </view>
+                <view class="ui-col">
+                    <text class="order-text">{{ order.rlweight }}</text>
+                </view>
+            </view>
+            <view class="ui-row"> 
+                <view class="ui-col-2">
+                    <text class="order-content-left">市场单价</text>
+                </view>
+                <view class="ui-col">
+                    <text class="order-text">{{ order.price }}</text>
+                </view>
+            </view>
+            <view class="ui-row"> 
+                <view class="ui-col-2">
+                    <text class="order-content-left">备注信息</text>
+                </view>
+                <view class="ui-col">
+                    <text class="order-text">{{ order.epinfo }}</text>
+                </view>
+            </view>
+
+            <view class="ui-row"> 
+                <image src="https://zhdb.shnfan.com{{order.epurl}}" lazy-load="true"/>  
+            </view>
+        </view>
+    </block>
+</template>
+
+<!--预约失败后 用户订单上显示的失败原因-->
+<template name="order-tishi">
+    <view wx:if="{{ item.status == WaitStatus }}">
+        <view class="ui-row"> 
+            <text class="ui-row-tishi">
+                请打包好货物耐心等待，快递小哥会在上门当天联系您，其他疑问请联系客服咨询
+            </text>
+        </view>
+    </view>
+</template>
+
+<!--客户按钮：当前订单状态 -->
+<template name="order-u-botton">
+   <block wx:if="{{ item.status != PickSuccess }}">
+      <view wx:if="{{ item.status != ClearStatus }}">
+          <view class="xian"></view>
+
+          <view class="ui-row">
+              <button class="ui-button" style="background:#34be79" bindtap="Gophone" >客服电话</button>
+
+              <!--如果是 预约失败 显示-->
+              <block wx:if="{{ item.status == StatusFail }}">
+                <button class="ui-button" style="background:#34be79" bindtap="GoeditOrder" data-id="{{ item.id }}">修改信息</button>
+                <button class="ui-button" style="background:#ff0000" bindtap="Gotwo"  data-id="{{ item.id }}"  data-status="{{ item.status }}" data-page="{{ orderPage }}" data-index="{{ orderIndex }}">再次预约</button>
+              </block>
+
+              <!--如果是 等待预约 显示-->
+              <block wx:if="{{ item.status == WaitStatus }}">
+                <button class="ui-button" style="margin-left:-50rpx;background:#ff0000" bindtap="Clearstart"  data-id="{{ item.id }}"  data-status="{{ item.status }}" data-page="{{ orderPage }}" data-index="{{ orderIndex }}">取消预约</button>
+              </block>
+
+          </view>
+      </view>
+  </block>
+</template>
+
+<!--员工按钮：当前订单状态等于等待预约-->
+<template name="order-e-botton">
+    <block wx:if="{{ item.status != PickSuccess }}">
+        <view wx:if="{{ item.status == WaitStatus }}">
+            <view class="xian"></view>
+
+            <view class="ui-row">
+                <button class="ui-button" style="background:#34be79" bindtap="GoWaitSuccess" data-id="{{ item.id }}"  data-status="{{ item.status }}" data-page="{{ orderPage }}" data-index="{{ orderIndex }}">预约成功</button>
+                <button class="ui-button" style="margin-left:-50rpx;background:#ff0000" bindtap="GoWaiError" data-id="{{ item.id }}" data-title="预约失败" data-status="{{ item.status }}">预约失败</button>
+            </view>
+        </view>
+
+        <!--如果是等待取件-->
+        <block wx:if="{{ item.status == WaitPick }}">
+            <view class="ui-row">
+              <button class="ui-button" style="background:#34be79" bindtap="GoPickSuccess" data-id="{{ item.id }}"  data-status="{{ item.status }}" data-title="完成取件" >完成取件</button>
+            </view>
+        </block>
+    </block>
+</template>
+
+<!--等待预约的预约失败原因-->
+<template name="order-error">
+    <view wx:if="{{  item.status == StatusFail}}">
+        <view class="xian"></view>
+        <view class="ui-row" style="padding-left: 30rpx;">
+            <view class="ui-col-2">
+                  <text class="order-content-error">失败原因:</text>
+            </view>
+            <view class="ui-col-9">
+                <text class="order-text">{{ item.shopfail }}</text> 
+            </view>
+        </view> 
+    </view>                
+</template>

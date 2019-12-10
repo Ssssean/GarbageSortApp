@@ -1,0 +1,60 @@
+<ui-nav-bar slot="nav-bar" custom-style="{{ {borderBottom:'1px solid rgba(231, 231, 231, 0.6)',backgroundColor:'#fff'} }}">
+    <view class="ui-row" style="height:46px;">
+         <view class="search-header-box ui-col ui-col-align-center align-center valign-middle" style="">
+            <view class="ui-col-content align-center valign-middle">
+                <view class="search-header-input search-header-hover">
+                    <text type="arrow-left" size="14" color="#27323f" class="ui-icon icon-arrow-left"  bindtap="tapCancel" style="display:none;"/>
+                    <image lazy-load="true" src="../../../../images/search.png" bindtap="searcHover" />
+                    <input class="input" type="text" confirm-type="search" placeholder="{{placeholder}}" value="{{keyword}}" focus="true" bindconfirm="tapSearch" placeholder-style="color:#999" />
+                    <text class="close" bindtap="tapCancel">取消</text>
+                </view>
+            </view>
+         </view>
+    </view>
+</ui-nav-bar>
+
+<view style="height:{{NAV_HEIGHT}}"></view>
+
+<view class="content" style="background-color: #fefefe;">
+    
+    <view wx:if="{{isHistory}}">
+        <view class="show-search-box" >
+            <view class="show-search-hot ui-row">
+                <view>
+                    <i-icon type="search"  size="18"/>
+                    <text>历史搜索</text>
+                </view>
+                <view style="flex: 1;align-items: flex-end">
+                    <image src="/images/delete.png" lazy-load="true" bindtap="clearSearchHistory"/>
+                </view>
+            </view>
+
+            <view wx:if="{{historySearch.length > 0}}">
+                <view hover-class="ui-btn-hover" wx:for="{{historySearch}}" wx:key="key" wx:for-index="key" wx:for-item="item" bindtap="tapSearch"  data-name="{{item}}" class="search-list">
+                    {{item}}
+                </view>
+            </view>
+        </view>
+        
+        <view class="search-line"></view>
+    </view>
+    
+    <view class="show-search-box" wx:if="{{isHotSearch}}">
+        <view class="show-search-hot">
+            <view><i-icon type="like" color="#EF3834" size="18"/><text>为你推荐</text></view>
+        </view>
+
+        <view wx:if="{{hotShops.length > 0}}">
+            <view hover-class="ui-btn-hover" wx:for="{{hotShops}}" bindtap="tapHotShop" wx:key="key" wx:for-index="key" wx:for-item="item" data-name="{{item.name}}" data-id="{{item.id}}" class="search-list">
+                {{item.name}}
+            </view>
+        </view>
+        <view wx:else>
+            <view class="title-box" bindtap="{{ run ? run : '' }}">
+                <image class="box-none" lazy-load="true" src="/images/none/empty_goods.png" />
+                <text>暂无热门商品</text>
+            </view>
+        </view>
+    </view>
+    
+</view>

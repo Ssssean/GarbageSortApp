@@ -1,0 +1,81 @@
+/* pages/modules/common/ljfl_search/lhfl_search.wxss */
+
+page {
+    background: #f0f0f0;
+}
+
+.sticky-in-relative-container {
+    position: relative;
+    height: 46px;
+}
+
+.ui-search-input {
+    text-align: left;
+}
+
+.ui-search-input {
+    display: flex;
+}
+
+.row-catelist {
+    height: 100rpx;
+}
+
+.col-list-name {
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 50rpx;
+}
+
+.col-list-type {
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 50rpx;
+}
+
+.row-catelist:nth-child(even) {
+    background-color: #fff;
+}
+
+.card {
+    padding: 10rpx;
+    border-radius: 10rpx;
+    color: #fff;
+    font-size: 25rpx;
+}
+
+.col-search-qingchu {
+    padding: 15rpx;
+    color: #34be79;
+    letter-spacing: 3px;
+}
+
+
+/* 改变输入时字体的颜色 */
+
+.ui-search-input {
+    color: #231815 !important;
+}
+
+.search-content {
+    margin-top: 50px;
+    line-height: 50px;
+}
+
+.row-cate-lajitong {
+    width: 70px;
+    height: 100px;
+}
+
+.row-cate-shuyu {
+    color: #919191;
+}
+
+.row-cate-laji {
+    font-weight: bold;
+}
+
+.row-cate-null {
+    margin-top: 100px;
+    color: #919191;
+}
